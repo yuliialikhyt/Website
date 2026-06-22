@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+    color: #333;
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px;
+}
+
+h1 {
+    color: #1f2937;
+}
+
+h2 {
+    margin-top: 40px;
+    color: #374151;
+}
+
+.product-grid {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.product-card {
+    background: white;
+    width: 300px;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    transition: 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.product-card h3 {
+    margin-top: 15px;
+}
+
+.price {
+    font-size: 20px;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.button {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background: #1d4ed8;
+}
+
+button {
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+button:hover {
+    background: #15803d;
+}
+
+.home-link {
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.download-section {
+    margin-top: 50px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+}

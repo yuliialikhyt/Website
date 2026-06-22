@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Red Sneakers</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a href="index.html">← Home</a>
+
+<h1>Red Sneakers</h1>
+
+<img
+src="https://via.placeholder.com/300x300?text=Blue+T-Shirt"
+alt="Blue T-Shirt">
+
+<p>Price: $29.99</p>
+
+<button onclick="addToCart()">
+Add To Cart
+</button>
+
+<button onclick="wishlist()">
+Add To Wishlist
+</button>
+
+<button onclick="purchase()">
+Buy Now
+</button>
+
+<script>
+
+function addToCart() {
+    gtag('event', 'add_to_cart', {
+        currency: 'USD',
+        value: 29.99,
+        items: [{
+            item_id: 'SKU001',
+            item_name: 'Blue T-Shirt'
+        }]
+    });
+}
+
+function wishlist() {
+    gtag('event', 'add_to_wishlist', {
+        items: [{
+            item_id: 'SKU001',
+            item_name: 'Blue T-Shirt'
+        }]
+    });
+}
+
+function purchase() {
+    gtag('event', 'purchase', {
+        transaction_id: 'ORDER001',
+        value: 29.99,
+        currency: 'USD',
+        items: [{
+            item_id: 'SKU001',
+            item_name: 'Blue T-Shirt'
+        }]
+    });
+}
+
+gtag('event', 'view_item', {
+    currency: 'USD',
+    value: 29.99,
+    items: [{
+        item_id: 'SKU001',
+        item_name: 'Blue T-Shirt'
+    }]
+});
+
+</script>
+
+</body>
+</html>
