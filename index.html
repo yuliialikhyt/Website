@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GA4 Test Site</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3W8L64Z71"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-F3W8L64Z71');
+</script>
+
+</head>
+<body>
+
+<h1>Hello from juliatesting.space!</h1>
+
+<button onclick="gtag('event', 'button_click', {
+  button_name: 'test_button'
+});">
+  Test Event
+</button>
+
+</body>
+</html>
