@@ -17,6 +17,16 @@
     gtag('event', 'page_view', {
        ga_client_id: clientId
     });
+     SalesforceInteractions.sendEvent({
+        interaction: {
+            name: "Page View"
+        },
+        user: {
+            identities: {
+                ga_client_id: clientId
+            }
+        }
+    });
   });
 </script>
 
