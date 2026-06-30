@@ -30,29 +30,45 @@
 
 <h2>Products</h2>
 
-<ul>
-    <li>
-        <a href="product1.html">
-            Blue T-Shirt
-        </a>
-        - $29.99
-    </li>
+<div class="product-grid">
 
-    <li>
-        <a href="product2.html">
-            Red Sneakers
-        </a>
-        - $79.99
-    </li>
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x300?text=Fashion+Doll+1" alt="Fashion Doll - Classic">
+        <h3>Fashion Doll - Classic</h3>
+        <p class="price">$19.99</p>
+        <button onclick="gtag('event', 'add_to_cart', {
+            item_name: 'Fashion Doll - Classic',
+            value: 19.99
+        });">
+            Add to Cart
+        </button>
+    </div>
 
-    <li>
-        <a href="product3.html">
-            Green Hoodie
-        </a>
-        - $49.99
-    </li>
-</ul>
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x300?text=Fashion+Doll+2" alt="Fashion Doll - Sparkle Edition">
+        <h3>Fashion Doll - Sparkle Edition</h3>
+        <p class="price">$24.99</p>
+        <button onclick="gtag('event', 'add_to_cart', {
+            item_name: 'Fashion Doll - Sparkle Edition',
+            value: 24.99
+        });">
+            Add to Cart
+        </button>
+    </div>
 
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x300?text=Fashion+Doll+3" alt="Fashion Doll - Deluxe Set">
+        <h3>Fashion Doll - Deluxe Set</h3>
+        <p class="price">$34.99</p>
+        <button onclick="gtag('event', 'add_to_cart', {
+            item_name: 'Fashion Doll - Deluxe Set',
+            value: 34.99
+        });">
+            Add to Cart
+        </button>
+    </div>
+
+</div>
 <h2>Downloads</h2>
 
 <a href="size-guide.pdf" download>
