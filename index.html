@@ -14,6 +14,10 @@
   gtag('config', 'G-F3W8L64Z71');
   gtag('get', 'G-F3W8L64Z71', 'client_id', (clientId) => {
      console.log(clientId);
+        // Send it as a custom event parameter
+    gtag('event', 'page_view', {
+       ga_client_id: clientId
+    });
   });
 </script>
 
