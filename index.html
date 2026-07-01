@@ -83,6 +83,17 @@ window.dataLayer.push({
   page_title: document.title,
   ga_client_id: 'julia_test'
 });
+window.dataLayer.push({
+  event: 'pageView',
+  page_location: window.location.href,
+  page_path: window.location.pathname,
+  page_title: document.title
+});
+window.dataLayer.push({
+  event: 'websearch',
+  websearch.searchTerm: window.location.href
+});
+     
      console.log(window.dataLayer);
  </script>
 </body>
