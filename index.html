@@ -86,6 +86,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a href="size-guide.pdf" download>
     Download Size Guide PDF
 </a>
- <script src="https://cdn.c360a.salesforce.com/beacon/c360a/5102b509-bdfa-421d-9dbe-417c3bf8d074/scripts/c360a.min.js"></script>
+ <script>
+     // Initialize dataLayer if it doesn't exist yet
+window.dataLayer = window.dataLayer || [];
+
+// Push the page_view event
+window.dataLayer.push({
+  event: 'page_view',
+  page_location: window.location.href,
+  page_path: window.location.pathname,
+  page_title: document.title
+});
+ </script>
 </body>
 </html>
