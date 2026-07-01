@@ -10,21 +10,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-PN2N9TCM');</script>
 <!-- End Google Tag Manager -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3W8L64Z71"></script>
-   
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-F3W8L64Z71');
-  gtag('get', 'G-F3W8L64Z71', 'client_id', (clientId) => {
-    gtag('event', 'page_view', {
-       ga_client_id: clientId
-    });
-  });
-</script>
 
 </head>
 <body>
@@ -95,7 +80,8 @@ window.dataLayer.push({
   event: 'page_view',
   page_location: window.location.href,
   page_path: window.location.pathname,
-  page_title: document.title
+  page_title: document.title,
+  ga_client_id: 'julia_test'
 });
      console.log(window.dataLayer);
  </script>
