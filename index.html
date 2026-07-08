@@ -24,24 +24,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
        ga_client_id: clientId
     });
   });
-    SalesforceInteractions.init({
-  consents: [
-    {
-      purpose: "Tracking",
-      provider: "OneTrust",
-      status: SalesforceInteractions.ConsentStatus.OptIn,
-    },
-  ],
-});
+SalesforceInteractions.init({
+    consents: [{
+        purpose: "Tracking",
+        provider: "OneTrust",
+        status: SalesforceInteractions.ConsentStatus.OptIn
+    }]
+}).then(() => {
     SalesforceInteractions.setLoggingLevel(4);
-    console.log('DUPA');
-    console.log("The ID of the customer: ",SalesforceInteractions.getAnonymousId());
-    SalesforceInteractions.sendEvent({
-  user: {
-    attributes: {
-      email: "test@test.com",
-    },
-  },
+    console.log("Anonymous ID:", SalesforceInteractions.getAnonymousId());
 });
 </script>
     
