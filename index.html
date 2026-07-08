@@ -35,6 +35,11 @@ SalesforceInteractions.init({
     SalesforceInteractions.setLoggingLevel(4);
     console.log("Anonymous ID:", SalesforceInteractions.getAnonymousId());
 });
+    SalesforceInteractions.sendEvent({
+  interaction: {
+    name: "Page View"
+  }
+});
 </script>
     
 </head>
