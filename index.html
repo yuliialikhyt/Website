@@ -33,6 +33,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     },
   ],
 });
+    SalesforceInteractions.sendEvent({
+  user: {
+    attributes: {
+      email: "test@test.com",
+    },
+  },
+});
 </script>
     
 </head>
