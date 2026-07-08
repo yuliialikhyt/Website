@@ -33,6 +33,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     },
   ],
 });
+    console.log("The ID of the customer: ",SalesforceInteractions.getAnonymousId());
     SalesforceInteractions.sendEvent({
   user: {
     attributes: {
