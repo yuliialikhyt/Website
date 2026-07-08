@@ -29,7 +29,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {
       purpose: "Tracking",
       provider: "OneTrust",
-      status: "Opt In",
+      status: SalesforceInteractions.ConsentStatus.OptIn,
     },
   ],
 });
@@ -99,7 +99,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </div>
 <h2>Downloads</h2>
-
+<script>
+SalesforceInteractions.sendEvent({
+    interaction: {
+        name: "Page View"
+    }
+});
+</script>
 <a href="size-guide.pdf" download>
     Download Size Guide PDF
 </a>
