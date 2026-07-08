@@ -33,6 +33,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     },
   ],
 });
+    SalesforceInteractions.setLoggingLevel(4);
+    console.log('DUPA');
     console.log("The ID of the customer: ",SalesforceInteractions.getAnonymousId());
     SalesforceInteractions.sendEvent({
   user: {
