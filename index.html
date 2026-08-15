@@ -3,135 +3,749 @@
 <head>
     <title>GA4 Test Site</title>
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Salesforce Data Cloud / Interactions -->
     <script src="https://cdn.c360a.salesforce.com/beacon/c360a/88ae5198-09a4-42d7-8b2c-d98bb08a2d8e/scripts/c360a.min.js"></script>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PN2N9TCM');</script>
-<!-- End Google Tag Manager -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-F3W8L64Z71"></script>
-   
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-F3W8L64Z71');
-  gtag('get', 'G-F3W8L64Z71', 'client_id', (clientId) => {
-    gtag('event', 'page_view', {
-       ga_client_id: clientId
-    });
-  });
-SalesforceInteractions.init({
-    consents: [{
-        provider: "OneTrust",
-        purpose: SalesforceInteractions.ConsentPurpose.Tracking,
-        status: SalesforceInteractions.ConsentStatus.OptIn
-    }]
-}).then(() => {
-    SalesforceInteractions.setLoggingLevel(4);
-    console.log("Anonymous ID:", SalesforceInteractions.getAnonymousId());
-});
-    SalesforceInteractions.sendEvent({
-  interaction: {
-    name: "Page View"
-  }
-});
-</script>
-    
+    <!-- Google Tag Manager -->
+    <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PN2N9TCM');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3W8L64Z71"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag(){
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'G-F3W8L64Z71');
+
+        gtag('get', 'G-F3W8L64Z71', 'client_id', (clientId) => {
+            gtag('event', 'page_view', {
+                ga_client_id: clientId
+            });
+        });
+
+        SalesforceInteractions.init({
+            consents: [{
+                provider: "OneTrust",
+                purpose: SalesforceInteractions.ConsentPurpose.Tracking,
+                status: SalesforceInteractions.ConsentStatus.OptIn
+            }]
+        }).then(() => {
+            SalesforceInteractions.setLoggingLevel(4);
+
+            console.log(
+                "Anonymous ID:",
+                SalesforceInteractions.getAnonymousId()
+            );
+
+            SalesforceInteractions.sendEvent({
+                interaction: {
+                    name: "Page View"
+                }
+            });
+        });
+    </script>
 </head>
+
 <body>
+
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PN2N9TCM"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+    <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PN2N9TCM"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden">
+    </iframe>
+</noscript>
 <!-- End Google Tag Manager (noscript) -->
-<h1>Hello from juliatesting.space!</h1>
 
-<button onclick="gtag('event', 'button_click', {
-  button_name: 'test_button'
-});">
-  Test Event
-</button>
 
-<h2>Products</h2>
+<!-- HEADER -->
+<header class="site-header">
 
-<div class="product-grid">
-
-    <div class="product-card">
-        <img src="https://via.placeholder.com/300x300?text=Fashion+Doll+1" alt="Fashion Doll - Classic">
-        <h3>Fashion Doll - Classic</h3>
-        <p class="price">$19.99</p>
-        <button onclick="gtag('event', 'add_to_cart', {
-            item_name: 'Fashion Doll - Classic',
-            value: 19.99
-        });">
-            Add to Cart
-        </button>
+    <div class="logo">
+        <a href="index.html">JULIA SHOP</a>
     </div>
 
-    <div class="product-card">
-        <img src="https://via.placeholder.com/300x300?text=Fashion+Doll+2" alt="Fashion Doll - Sparkle Edition">
-        <h3>Fashion Doll - Sparkle Edition</h3>
-        <p class="price">$24.99</p>
-        <button onclick="gtag('event', 'add_to_cart', {
-            item_name: 'Fashion Doll - Sparkle Edition',
-            value: 24.99
-        });">
-            Add to Cart
-        </button>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#products">Products</a>
+        <a href="#downloads">Downloads</a>
+        <a href="cart.html" class="cart-link">
+            🛒 Cart
+            <span id="cart-count">0</span>
+        </a>
+    </nav>
+
+</header>
+
+
+<!-- HERO / BANNER -->
+<section class="hero">
+
+    <img
+        src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=80"
+        alt="Fashion collection banner">
+
+    <div class="hero-content">
+        <h1>Discover Your Style</h1>
+
+        <p>
+            Explore our collection of fashion dolls and accessories.
+        </p>
+
+        <a href="#products" class="hero-button">
+            Shop Now
+        </a>
     </div>
 
-    <div class="product-card">
-        <img src="https://via.placeholder.com/300x300?text=Fashion+Doll+3" alt="Fashion Doll - Deluxe Set">
-        <h3>Fashion Doll - Deluxe Set</h3>
-        <p class="price">$34.99</p>
-        <button onclick="gtag('event', 'add_to_cart', {
-            item_name: 'Fashion Doll - Deluxe Set',
-            value: 34.99
+</section>
+
+
+<!-- INTRO -->
+<section class="intro">
+
+    <h1>Welcome to juliatesting.space!</h1>
+
+    <button
+        onclick="gtag('event', 'button_click', {
+            button_name: 'test_button'
         });">
-            Add to Cart
-        </button>
+        Test Event
+    </button>
+
+</section>
+
+
+<!-- PRODUCTS -->
+<section id="products" class="products-section">
+
+    <h2>Products</h2>
+
+    <div class="product-grid">
+
+
+        <!-- PRODUCT 1 -->
+        <div class="product-card">
+
+            <div class="product-image-container">
+
+                <img
+                    src="https://via.placeholder.com/400x400?text=Fashion+Doll+1"
+                    alt="Fashion Doll - Classic">
+
+                <button
+                    class="wishlist-button"
+                    onclick="toggleWishlist('doll-1', this)"
+                    aria-label="Add to wishlist">
+                    ♡
+                </button>
+
+            </div>
+
+            <h3>Fashion Doll - Classic</h3>
+
+            <p class="description">
+                Classic fashion doll with elegant accessories.
+            </p>
+
+            <p class="price">$19.99</p>
+
+            <button
+                class="add-cart-button"
+                onclick="addToCart('doll-1')">
+                Add to Cart
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCT 2 -->
+        <div class="product-card">
+
+            <div class="product-image-container">
+
+                <img
+                    src="https://via.placeholder.com/400x400?text=Fashion+Doll+2"
+                    alt="Fashion Doll - Sparkle Edition">
+
+                <button
+                    class="wishlist-button"
+                    onclick="toggleWishlist('doll-2', this)"
+                    aria-label="Add to wishlist">
+                    ♡
+                </button>
+
+            </div>
+
+            <h3>Fashion Doll - Sparkle Edition</h3>
+
+            <p class="description">
+                Sparkling outfit and premium accessories.
+            </p>
+
+            <p class="price">$24.99</p>
+
+            <button
+                class="add-cart-button"
+                onclick="addToCart('doll-2')">
+                Add to Cart
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCT 3 -->
+        <div class="product-card">
+
+            <div class="product-image-container">
+
+                <img
+                    src="https://via.placeholder.com/400x400?text=Fashion+Doll+3"
+                    alt="Fashion Doll - Deluxe Set">
+
+                <button
+                    class="wishlist-button"
+                    onclick="toggleWishlist('doll-3', this)"
+                    aria-label="Add to wishlist">
+                    ♡
+                </button>
+
+            </div>
+
+            <h3>Fashion Doll - Deluxe Set</h3>
+
+            <p class="description">
+                Deluxe doll set with multiple outfits.
+            </p>
+
+            <p class="price">$34.99</p>
+
+            <button
+                class="add-cart-button"
+                onclick="addToCart('doll-3')">
+                Add to Cart
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCT 4 -->
+        <div class="product-card">
+
+            <div class="product-image-container">
+
+                <img
+                    src="https://via.placeholder.com/400x400?text=Fashion+Doll+4"
+                    alt="Fashion Doll - Summer Edition">
+
+                <button
+                    class="wishlist-button"
+                    onclick="toggleWishlist('doll-4', this)"
+                    aria-label="Add to wishlist">
+                    ♡
+                </button>
+
+            </div>
+
+            <h3>Fashion Doll - Summer Edition</h3>
+
+            <p class="description">
+                Bright summer outfit with beach accessories.
+            </p>
+
+            <p class="price">$29.99</p>
+
+            <button
+                class="add-cart-button"
+                onclick="addToCart('doll-4')">
+                Add to Cart
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCT 5 -->
+        <div class="product-card">
+
+            <div class="product-image-container">
+
+                <img
+                    src="https://via.placeholder.com/400x400?text=Fashion+Doll+5"
+                    alt="Fashion Doll - Royal Collection">
+
+                <button
+                    class="wishlist-button"
+                    onclick="toggleWishlist('doll-5', this)"
+                    aria-label="Add to wishlist">
+                    ♡
+                </button>
+
+            </div>
+
+            <h3>Fashion Doll - Royal Collection</h3>
+
+            <p class="description">
+                Elegant royal-inspired fashion collection.
+            </p>
+
+            <p class="price">$39.99</p>
+
+            <button
+                class="add-cart-button"
+                onclick="addToCart('doll-5')">
+                Add to Cart
+            </button>
+
+        </div>
+
+
+        <!-- PRODUCT 6 -->
+        <div class="product-card">
+
+            <div class="product-image-container">
+
+                <img
+                    src="https://via.placeholder.com/400x400?text=Fashion+Doll+6"
+                    alt="Fashion Doll - Limited Edition">
+
+                <button
+                    class="wishlist-button"
+                    onclick="toggleWishlist('doll-6', this)"
+                    aria-label="Add to wishlist">
+                    ♡
+                </button>
+
+            </div>
+
+            <h3>Fashion Doll - Limited Edition</h3>
+
+            <p class="description">
+                Limited edition collector's fashion doll.
+            </p>
+
+            <p class="price">$49.99</p>
+
+            <button
+                class="add-cart-button"
+                onclick="addToCart('doll-6')">
+                Add to Cart
+            </button>
+
+        </div>
+
     </div>
 
-</div>
-<h2>Downloads</h2>
+</section>
+
+
+<!-- DOWNLOADS -->
+<section id="downloads" class="downloads">
+
+    <h2>Downloads</h2>
+
+    <a href="size-guide.pdf" download>
+        Download Size Guide PDF
+    </a>
+
+</section>
+
+
 <script>
-SalesforceInteractions.sendEvent({
-    interaction: {
-        name: "Page View"
-    }
-});
-</script>
-<a href="size-guide.pdf" download>
-    Download Size Guide PDF
-</a>
- <script>
-     // Initialize dataLayer if it doesn't exist yet
-window.dataLayer = window.dataLayer || [];
 
-// Push the page_view event
-window.dataLayer.push({
-  event: 'page_view',
-  page_location: window.location.href,
-  page_path: window.location.pathname,
-  page_title: document.title,
-  ga_client_id: 'julia_test'
-});
-window.dataLayer.push({
-  event: 'pageView',
-  page_location: window.location.href,
-  page_path: window.location.pathname,
-  page_title: document.title
-});
-window.dataLayer.push({
-  event: 'websearch',
-  searchTerm: window.location.href
-});
-     
-     console.log(window.dataLayer);
- </script>
+    /*
+     * PRODUCT DATABASE
+     */
+
+    const products = {
+
+        "doll-1": {
+            id: "doll-1",
+            name: "Fashion Doll - Classic",
+            price: 19.99,
+            image: "https://via.placeholder.com/400x400?text=Fashion+Doll+1"
+        },
+
+        "doll-2": {
+            id: "doll-2",
+            name: "Fashion Doll - Sparkle Edition",
+            price: 24.99,
+            image: "https://via.placeholder.com/400x400?text=Fashion+Doll+2"
+        },
+
+        "doll-3": {
+            id: "doll-3",
+            name: "Fashion Doll - Deluxe Set",
+            price: 34.99,
+            image: "https://via.placeholder.com/400x400?text=Fashion+Doll+3"
+        },
+
+        "doll-4": {
+            id: "doll-4",
+            name: "Fashion Doll - Summer Edition",
+            price: 29.99,
+            image: "https://via.placeholder.com/400x400?text=Fashion+Doll+4"
+        },
+
+        "doll-5": {
+            id: "doll-5",
+            name: "Fashion Doll - Royal Collection",
+            price: 39.99,
+            image: "https://via.placeholder.com/400x400?text=Fashion+Doll+5"
+        },
+
+        "doll-6": {
+            id: "doll-6",
+            name: "Fashion Doll - Limited Edition",
+            price: 49.99,
+            image: "https://via.placeholder.com/400x400?text=Fashion+Doll+6"
+        }
+
+    };
+
+
+    /*
+     * GET CART
+     */
+
+    function getCart() {
+
+        return JSON.parse(
+            localStorage.getItem("cart") || "[]"
+        );
+
+    }
+
+
+    /*
+     * SAVE CART
+     */
+
+    function saveCart(cart) {
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+    }
+
+
+    /*
+     * ADD PRODUCT TO CART
+     */
+
+    function addToCart(productId) {
+
+        const product = products[productId];
+
+        if (!product) {
+            return;
+        }
+
+        let cart = getCart();
+
+        const existingProduct = cart.find(
+            item => item.id === productId
+        );
+
+        if (existingProduct) {
+
+            existingProduct.quantity += 1;
+
+        } else {
+
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                quantity: 1
+            });
+
+        }
+
+        saveCart(cart);
+
+        updateCartCount();
+
+
+        /*
+         * GA4 ADD TO CART
+         */
+
+        gtag('event', 'add_to_cart', {
+
+            currency: 'USD',
+
+            value: product.price,
+
+            items: [{
+                item_id: product.id,
+                item_name: product.name,
+                price: product.price,
+                quantity: 1
+            }]
+
+        });
+
+
+        /*
+         * Salesforce Interactions
+         */
+
+        if (typeof SalesforceInteractions !== "undefined") {
+
+            SalesforceInteractions.sendEvent({
+
+                interaction: {
+                    name: "Add to Cart"
+                },
+
+                user: {
+                    attributes: {}
+                },
+
+                source: {
+                    channel: "Web"
+                },
+
+                catalog: {
+                    Product: {
+                        id: product.id
+                    }
+                }
+
+            });
+
+        }
+
+
+        alert(product.name + " added to cart!");
+
+    }
+
+
+    /*
+     * UPDATE CART COUNTER
+     */
+
+    function updateCartCount() {
+
+        const cart = getCart();
+
+        const count = cart.reduce(
+            (total, item) => total + item.quantity,
+            0
+        );
+
+        const counter =
+            document.getElementById("cart-count");
+
+        if (counter) {
+            counter.textContent = count;
+        }
+
+    }
+
+
+    /*
+     * WISHLIST
+     */
+
+    function getWishlist() {
+
+        return JSON.parse(
+            localStorage.getItem("wishlist") || "[]"
+        );
+
+    }
+
+
+    function saveWishlist(wishlist) {
+
+        localStorage.setItem(
+            "wishlist",
+            JSON.stringify(wishlist)
+        );
+
+    }
+
+
+    /*
+     * TOGGLE WISHLIST
+     */
+
+    function toggleWishlist(productId, button) {
+
+        const product = products[productId];
+
+        let wishlist = getWishlist();
+
+        const index = wishlist.indexOf(productId);
+
+        if (index === -1) {
+
+            wishlist.push(productId);
+
+            button.classList.add("active");
+            button.textContent = "♥";
+
+            /*
+             * GA4
+             */
+
+            gtag('event', 'add_to_wishlist', {
+
+                currency: 'USD',
+
+                value: product.price,
+
+                items: [{
+                    item_id: product.id,
+                    item_name: product.name,
+                    price: product.price
+                }]
+
+            });
+
+
+            /*
+             * Salesforce
+             */
+
+            if (typeof SalesforceInteractions !== "undefined") {
+
+                SalesforceInteractions.sendEvent({
+
+                    interaction: {
+                        name: "Add to Wishlist"
+                    },
+
+                    catalog: {
+                        Product: {
+                            id: product.id
+                        }
+                    }
+
+                });
+
+            }
+
+        } else {
+
+            wishlist.splice(index, 1);
+
+            button.classList.remove("active");
+            button.textContent = "♡";
+
+        }
+
+        saveWishlist(wishlist);
+
+    }
+
+
+    /*
+     * RESTORE WISHLIST STATE
+     */
+
+    function restoreWishlist() {
+
+        const wishlist = getWishlist();
+
+        document
+            .querySelectorAll(".wishlist-button")
+            .forEach(button => {
+
+                const onclick =
+                    button.getAttribute("onclick");
+
+                const match =
+                    onclick.match(/'([^']+)'/);
+
+                if (!match) {
+                    return;
+                }
+
+                const productId = match[1];
+
+                if (wishlist.includes(productId)) {
+
+                    button.classList.add("active");
+                    button.textContent = "♥";
+
+                }
+
+            });
+
+    }
+
+
+    /*
+     * INITIALIZE
+     */
+
+    updateCartCount();
+    restoreWishlist();
+
+
+    /*
+     * DATA LAYER TEST EVENTS
+     */
+
+    window.dataLayer = window.dataLayer || [];
+
+    window.dataLayer.push({
+
+        event: 'page_view',
+
+        page_location: window.location.href,
+
+        page_path: window.location.pathname,
+
+        page_title: document.title,
+
+        ga_client_id: 'julia_test'
+
+    });
+
+    window.dataLayer.push({
+
+        event: 'pageView',
+
+        page_location: window.location.href,
+
+        page_path: window.location.pathname,
+
+        page_title: document.title
+
+    });
+
+    window.dataLayer.push({
+
+        event: 'websearch',
+
+        searchTerm: window.location.href
+
+    });
+
+    console.log(window.dataLayer);
+
+</script>
+
 </body>
 </html>

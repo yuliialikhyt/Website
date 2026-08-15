@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Shopping Cart - GA4 Test Site</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Salesforce -->
+    <script src="https://cdn.c360a.salesforce.com/beacon/c360a/88ae5198-09a4-42d7-8b2c-d98bb08a2d8e/scripts/c360a.min.js"></script>
+
+    <!-- Google Tag Manager -->
+    <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+i:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PN2N9TCM');
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3W8L64Z71"></script>
+
+    <script>
+
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-F3W8L64Z71');
+
+    </script>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="logo">
+        <a href="index.html">
+            JULIA SHOP
+        </a>
+    </div>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="index.html#products">
+            Products
+        </a>
+
+        <a href="cart.html" class="cart-link">
+            🛒 Cart
+            <span id="cart-count">0</span>
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="cart-page">
+
+    <h1>Your Shopping Cart</h1>
+
+
+    <div id="cart-container"></div>
+
+
+    <div class="cart-summary">
+
+        <h2>
+            Total:
+            <span id="cart-total">$0.00</span>
+        </h2>
+
+        <button
+            class="checkout-button"
+            onclick="checkout()">
+            Proceed to Checkout
+        </button>
+
+    </div>
+
+</main>
+
+
+<script>
+
+    /*
+     * GET CART
+     */
+
+    function getCart() {
+
+        return JSON.parse(
+            localStorage.getItem("cart") || "[]"
+        );
+
+    }
+
+
+    /*
+     * SAVE CART
+     */
+
+    function saveCart(cart) {
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+    }
+
+
+    /*
+     * DISPLAY CART
+     */
+
+    function renderCart() {
+
+        const cart = getCart();
+
+        const container =
+            document.getElementById("cart-container");
+
+        const totalElement =
+            document.getElementById("cart-total");
+
+        const countElement =
+            document.getElementById("cart-count");
+
+
+        if (cart.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-cart">
+
+                    <h2>Your cart is empty</h2>
+
+                    <p>
+                        Add some products to your cart
+                        to see them here.
+                    </p>
+
+                    <a
+                        href="index.html#products"
+                        class="hero-button">
+                        Continue Shopping
+                    </a>
+
+                </div>
+
+            `;
+
+            totalElement.textContent = "$0.00";
+
+            countElement.textContent = "0";
+
+            return;
+
+        }
+
+
+        let total = 0;
+
+        let itemCount = 0;
+
+
+        container.innerHTML = cart.map((item, index) => {
+
+            const itemTotal =
+                item.price * item.quantity;
+
+            total += itemTotal;
+
+            itemCount += item.quantity;
+
+
+            return `
+
+                <div class="cart-item">
+
+                    <img
+                        src="${item.image}"
+                        alt="${item.name}">
+
+                    <div class="cart-item-info">
+
+                        <h3>
+                            ${item.name}
+                        </h3>
+
+                        <p>
+                            $${item.price.toFixed(2)}
+                        </p>
+
+                    </div>
+
+
+                    <div class="quantity-controls">
+
+                        <button
+                            onclick="changeQuantity(${index}, -1)">
+                            −
+                        </button>
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+                        <button
+                            onclick="changeQuantity(${index}, 1)">
+                            +
+                        </button>
+
+                    </div>
+
+
+                    <div class="cart-item-total">
+
+                        $${itemTotal.toFixed(2)}
+
+                    </div>
+
+
+                    <button
+                        class="remove-button"
+                        onclick="removeItem(${index})">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+        totalElement.textContent =
+            "$" + total.toFixed(2);
+
+        countElement.textContent =
+            itemCount;
+
+    }
+
+
+    /*
+     * CHANGE QUANTITY
+     */
+
+    function changeQuantity(index, amount) {
+
+        const cart = getCart();
+
+        cart[index].quantity += amount;
+
+
+        if (cart[index].quantity <= 0) {
+
+            cart.splice(index, 1);
+
+        }
+
+
+        saveCart(cart);
+
+        renderCart();
+
+    }
+
+
+    /*
+     * REMOVE ITEM
+     */
+
+    function removeItem(index) {
+
+        const cart = getCart();
+
+        const removedItem = cart[index];
+
+
+        /*
+         * GA4 remove_from_cart
+         */
+
+        if (removedItem) {
+
+            gtag('event', 'remove_from_cart', {
+
+                currency: 'USD',
+
+                value:
+                    removedItem.price *
+                    removedItem.quantity,
+
+                items: [{
+
+                    item_id: removedItem.id,
+
+                    item_name: removedItem.name,
+
+                    price: removedItem.price,
+
+                    quantity:
+                        removedItem.quantity
+
+                }]
+
+            });
+
+        }
+
+
+        cart.splice(index, 1);
+
+        saveCart(cart);
+
+        renderCart();
+
+    }
+
+
+    /*
+     * CHECKOUT TEST EVENT
+     */
+
+    function checkout() {
+
+        const cart = getCart();
+
+        if (cart.length === 0) {
+
+            alert("Your cart is empty.");
+
+            return;
+
+        }
+
+
+        const items =
+            cart.map(item => ({
+
+                item_id: item.id,
+
+                item_name: item.name,
+
+                price: item.price,
+
+                quantity: item.quantity
+
+            }));
+
+
+        const total =
+            cart.reduce(
+                (sum, item) =>
+                    sum + item.price * item.quantity,
+                0
+            );
+
+
+        /*
+         * GA4 begin_checkout
+         */
+
+        gtag('event', 'begin_checkout', {
+
+            currency: 'USD',
+
+            value: total,
+
+            items: items
+
+        });
+
+
+        alert(
+            "Checkout test event sent!"
+        );
+
+    }
+
+
+    renderCart();
+
+</script>
+
+</body>
+</html>
