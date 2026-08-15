@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +5,10 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
- 
+
     <!-- Salesforce Data Cloud / Interactions -->
     <script src="https://cdn.c360a.salesforce.com/beacon/c360a/88ae5198-09a4-42d7-8b2c-d98bb08a2d8e/scripts/c360a.min.js"></script>
- 
+
     <!-- Google Tag Manager -->
     <script>
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -20,26 +18,26 @@
     })(window,document,'script','dataLayer','GTM-PN2N9TCM');
     </script>
     <!-- End Google Tag Manager -->
- 
+
     <!-- Google tag -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3W8L64Z71"></script>
- 
+
     <script>
         window.dataLayer = window.dataLayer || [];
- 
+
         function gtag(){
             dataLayer.push(arguments);
         }
- 
+
         gtag('js', new Date());
         gtag('config', 'G-F3W8L64Z71');
- 
+
         gtag('get', 'G-F3W8L64Z71', 'client_id', (clientId) => {
             gtag('event', 'page_view', {
                 ga_client_id: clientId
             });
         });
- 
+
         SalesforceInteractions.init({
             consents: [{
                 provider: "OneTrust",
@@ -48,12 +46,12 @@
             }]
         }).then(() => {
             SalesforceInteractions.setLoggingLevel(4);
- 
+
             console.log(
                 "Anonymous ID:",
                 SalesforceInteractions.getAnonymousId()
             );
- 
+
             SalesforceInteractions.sendEvent({
                 interaction: {
                     name: "Page View"
@@ -61,7 +59,7 @@
             });
         });
     </script>
- 
+
     <!-- Nav revamp styles (self-contained, doesn't depend on styles.css) -->
     <style>
         :root{
@@ -73,7 +71,13 @@
             --line: rgba(250,247,242,0.14);
         }
         *{box-sizing:border-box;}
- 
+
+        html, body{
+            margin:0;
+            padding:0;
+            width:100%;
+        }
+
         .site-header{
             background:var(--ink);
             font-family:'Inter', sans-serif;
@@ -88,7 +92,7 @@
             padding:0 24px;
             height:68px;
         }
- 
+
         .logo{
             display:flex;
             align-items:center;
@@ -112,7 +116,7 @@
         .logo-mark span:nth-child(2){ background:var(--yellow); }
         .logo-mark span:nth-child(3){ background:var(--yellow); }
         .logo-mark span:nth-child(4){ background:var(--coral); }
- 
+
         .main-nav{
             display:flex;
             align-items:center;
@@ -135,7 +139,7 @@
         .nav-link.active{
             background:var(--ink-light);
         }
- 
+
         .nav-shop{ position:relative; }
         .shop-btn{
             display:flex;
@@ -166,7 +170,7 @@
         .shop-btn[aria-expanded="true"] .chevron{
             transform:rotate(180deg);
         }
- 
+
         .shop-dropdown{
             position:absolute;
             top:calc(100% + 8px);
@@ -212,14 +216,14 @@
         .shop-dropdown a:nth-child(1) .dot{ background:var(--coral); }
         .shop-dropdown a:nth-child(2) .dot{ background:var(--yellow); }
         .shop-dropdown a:nth-child(3) .dot{ background:#7FD9C4; }
- 
+
         .header-actions{
             display:flex;
             align-items:center;
             gap:6px;
             flex-shrink:0;
         }
- 
+
         .header-search{
             display:flex;
             align-items:center;
@@ -241,7 +245,7 @@
         }
         .header-search input::placeholder{ color:rgba(250,247,242,0.5); }
         .header-search svg{ flex-shrink:0; opacity:0.75; }
- 
+
         .header-icon{
             display:flex;
             align-items:center;
@@ -259,7 +263,7 @@
             outline:none;
         }
         .header-icon.active{ color:var(--coral); }
- 
+
         .header-account{
             display:flex;
             align-items:center;
@@ -277,7 +281,7 @@
             background:var(--ink-light);
             outline:none;
         }
- 
+
         .header-cart{
             display:flex;
             align-items:center;
@@ -309,7 +313,7 @@
             justify-content:center;
             padding:0 4px;
         }
- 
+
         .mobile-toggle{
             display:none;
             background:none;
@@ -318,7 +322,7 @@
             padding:8px;
             cursor:pointer;
         }
- 
+
         @media (max-width:900px){
             .header-search{ display:none; }
         }
@@ -326,11 +330,53 @@
             .main-nav{ display:none; }
             .mobile-toggle{ display:flex; }
         }
+
+        /* Hero: full-bleed */
+        .hero{
+            position:relative;
+            width:100%;
+            margin:0;
+            padding:0;
+            overflow:hidden;
+            line-height:0;
+        }
+        .hero img{
+            width:100%;
+            height:auto;
+            display:block;
+            object-fit:cover;
+        }
+        .hero-content{
+            position:absolute;
+            top:50%;
+            left:24px;
+            transform:translateY(-50%);
+            color:var(--cream);
+            max-width:480px;
+        }
+
+        /* Product buttons: purple */
+        .add-cart-button{
+            background:var(--ink-light);
+            color:#fff;
+            border:none;
+            border-radius:10px;
+            padding:10px 18px;
+            font-family:'Inter', sans-serif;
+            font-weight:600;
+            font-size:14px;
+            cursor:pointer;
+            transition:filter 0.15s ease;
+        }
+        .add-cart-button:hover, .add-cart-button:focus-visible{
+            filter:brightness(1.1);
+            outline:none;
+        }
     </style>
 </head>
- 
+
 <body>
- 
+
 <!-- Google Tag Manager (noscript) -->
 <noscript>
     <iframe
@@ -341,24 +387,24 @@
     </iframe>
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
- 
- 
+
+
 <!-- HEADER -->
 <header class="site-header">
- 
+
     <div class="header-inner">
- 
+
         <a href="index.html" class="logo">
             <span class="logo-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
             Martel
         </a>
- 
+
         <nav class="main-nav" aria-label="Main">
- 
+
             <a href="index.html" class="nav-link active">
                 Home
             </a>
- 
+
             <div class="nav-shop">
                 <button class="shop-btn" id="shopToggle" aria-haspopup="true" aria-expanded="false" aria-controls="shopMenu">
                     Shop
@@ -366,30 +412,30 @@
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </button>
- 
+
                 <div class="shop-dropdown" id="shopMenu" role="menu">
                     <a href="index.html#products" role="menuitem"><span class="dot" aria-hidden="true"></span>Dolls</a>
                     <a href="index.html#products" role="menuitem"><span class="dot" aria-hidden="true"></span>Puzzles</a>
                     <a href="index.html#products" role="menuitem"><span class="dot" aria-hidden="true"></span>Construction sets</a>
                 </div>
             </div>
- 
+
             <a href="index.html#downloads" class="nav-link">
                 Downloads
             </a>
- 
+
             <a href="#" class="nav-link">
                 About
             </a>
- 
+
             <a href="#" class="nav-link">
                 Contact
             </a>
- 
+
         </nav>
- 
+
         <div class="header-actions">
- 
+
             <div class="header-search" role="search">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="11" cy="11" r="8"></circle>
@@ -397,7 +443,7 @@
                 </svg>
                 <input type="search" placeholder="Search products" aria-label="Search products">
             </div>
- 
+
             <a href="login.html" class="header-account">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -405,27 +451,27 @@
                 </svg>
                 Login
             </a>
- 
+
             <a href="#" class="header-icon wishlist-header" aria-label="Wishlist">
                 ♡
             </a>
- 
+
             <a href="cart.html" class="header-cart">
- 
+
                 <span class="cart-icon">
                     🛍
                 </span>
- 
+
                 <span class="cart-text">
                     Cart
                 </span>
- 
+
                 <span id="cart-count">
                     0
                 </span>
- 
+
             </a>
- 
+
             <button class="mobile-toggle" aria-label="Open menu" id="mobileToggle">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -433,373 +479,373 @@
                     <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
             </button>
- 
+
         </div>
- 
+
     </div>
- 
+
 </header>
- 
+
 <!-- HERO / BANNER -->
 <section class="hero">
- 
+
     <img
         src="images/hero.png"
         alt="Fashion collection banner">
- 
+
     <div class="hero-content">
         <h1>Discover Your Style</h1>
- 
+
         <p>
             Explore our collection of fashion dolls and accessories.
         </p>
- 
+
         <a href="#products" class="hero-button">
             Shop Now
         </a>
     </div>
- 
+
 </section>
- 
- 
+
+
 <!-- PRODUCTS -->
 <section id="products" class="products-section">
- 
+
     <h2>Products</h2>
- 
+
     <div class="product-grid">
- 
- 
+
+
         <!-- PRODUCT 1 -->
         <div class="product-card">
- 
+
             <div class="product-image-container">
- 
+
                 <img
                     src="images/whitney.png"
                     alt="Fashion Doll - Classic">
- 
+
                 <button
                     class="wishlist-button"
                     onclick="toggleWishlist('doll-1', this)"
                     aria-label="Add to wishlist">
                     ♡
                 </button>
- 
+
             </div>
- 
+
             <h3>Whitney Doll</h3>
- 
+
             <p class="description">
                 Whitney Houston doll - the icon
             </p>
- 
+
             <p class="price">$19.99</p>
- 
+
             <button
                 class="add-cart-button"
                 onclick="addToCart('doll-1')">
                 Add to Cart
             </button>
- 
+
         </div>
- 
- 
+
+
         <!-- PRODUCT 2 -->
         <div class="product-card">
- 
+
             <div class="product-image-container">
- 
+
                 <img
                     src="images/business.png"
                     alt="Fashion Doll - Sparkle Edition">
- 
+
                 <button
                     class="wishlist-button"
                     onclick="toggleWishlist('doll-2', this)"
                     aria-label="Add to wishlist">
                     ♡
                 </button>
- 
+
             </div>
- 
+
             <h3>The Bussiness Lady doll</h3>
- 
+
             <p class="description">
                 Sparkling outfit and premium accessories.
             </p>
- 
+
             <p class="price">$24.99</p>
- 
+
             <button
                 class="add-cart-button"
                 onclick="addToCart('doll-2')">
                 Add to Cart
             </button>
- 
+
         </div>
- 
- 
+
+
         <!-- PRODUCT 3 -->
         <div class="product-card">
- 
+
             <div class="product-image-container">
- 
+
                 <img
                     src="https://via.placeholder.com/400x400?text=Fashion+Doll+3"
                     alt="Fashion Doll - Deluxe Set">
- 
+
                 <button
                     class="wishlist-button"
                     onclick="toggleWishlist('doll-3', this)"
                     aria-label="Add to wishlist">
                     ♡
                 </button>
- 
+
             </div>
- 
+
             <h3>Fashion Doll - Deluxe Set</h3>
- 
+
             <p class="description">
                 Deluxe doll set with multiple outfits.
             </p>
- 
+
             <p class="price">$34.99</p>
- 
+
             <button
                 class="add-cart-button"
                 onclick="addToCart('doll-3')">
                 Add to Cart
             </button>
- 
+
         </div>
- 
- 
+
+
         <!-- PRODUCT 4 -->
         <div class="product-card">
- 
+
             <div class="product-image-container">
- 
+
                 <img
                     src="https://via.placeholder.com/400x400?text=Fashion+Doll+4"
                     alt="Fashion Doll - Summer Edition">
- 
+
                 <button
                     class="wishlist-button"
                     onclick="toggleWishlist('doll-4', this)"
                     aria-label="Add to wishlist">
                     ♡
                 </button>
- 
+
             </div>
- 
+
             <h3>Fashion Doll - Summer Edition</h3>
- 
+
             <p class="description">
                 Bright summer outfit with beach accessories.
             </p>
- 
+
             <p class="price">$29.99</p>
- 
+
             <button
                 class="add-cart-button"
                 onclick="addToCart('doll-4')">
                 Add to Cart
             </button>
- 
+
         </div>
- 
- 
+
+
         <!-- PRODUCT 5 -->
         <div class="product-card">
- 
+
             <div class="product-image-container">
- 
+
                 <img
                     src="https://via.placeholder.com/400x400?text=Fashion+Doll+5"
                     alt="Fashion Doll - Royal Collection">
- 
+
                 <button
                     class="wishlist-button"
                     onclick="toggleWishlist('doll-5', this)"
                     aria-label="Add to wishlist">
                     ♡
                 </button>
- 
+
             </div>
- 
+
             <h3>Fashion Doll - Royal Collection</h3>
- 
+
             <p class="description">
                 Elegant royal-inspired fashion collection.
             </p>
- 
+
             <p class="price">$39.99</p>
- 
+
             <button
                 class="add-cart-button"
                 onclick="addToCart('doll-5')">
                 Add to Cart
             </button>
- 
+
         </div>
- 
- 
+
+
         <!-- PRODUCT 6 -->
         <div class="product-card">
- 
+
             <div class="product-image-container">
- 
+
                 <img
                     src="https://via.placeholder.com/400x400?text=Fashion+Doll+6"
                     alt="Fashion Doll - Limited Edition">
- 
+
                 <button
                     class="wishlist-button"
                     onclick="toggleWishlist('doll-6', this)"
                     aria-label="Add to wishlist">
                     ♡
                 </button>
- 
+
             </div>
- 
+
             <h3>Fashion Doll - Limited Edition</h3>
- 
+
             <p class="description">
                 Limited edition collector's fashion doll.
             </p>
- 
+
             <p class="price">$49.99</p>
- 
+
             <button
                 class="add-cart-button"
                 onclick="addToCart('doll-6')">
                 Add to Cart
             </button>
- 
+
         </div>
- 
+
     </div>
- 
+
 </section>
- 
- 
+
+
 <!-- DOWNLOADS -->
 <section id="downloads" class="downloads">
- 
+
     <h2>Downloads</h2>
- 
+
     <a href="size-guide.pdf" download>
         Download Size Guide PDF
     </a>
- 
+
 </section>
- 
- 
+
+
 <script>
- 
+
     /*
      * PRODUCT DATABASE
      */
- 
+
     const products = {
- 
+
         "doll-1": {
             id: "doll-1",
             name: "Fashion Doll - Classic",
             price: 19.99,
             image: "https://via.placeholder.com/400x400?text=Fashion+Doll+1"
         },
- 
+
         "doll-2": {
             id: "doll-2",
             name: "Fashion Doll - Sparkle Edition",
             price: 24.99,
             image: "https://via.placeholder.com/400x400?text=Fashion+Doll+2"
         },
- 
+
         "doll-3": {
             id: "doll-3",
             name: "Fashion Doll - Deluxe Set",
             price: 34.99,
             image: "https://via.placeholder.com/400x400?text=Fashion+Doll+3"
         },
- 
+
         "doll-4": {
             id: "doll-4",
             name: "Fashion Doll - Summer Edition",
             price: 29.99,
             image: "https://via.placeholder.com/400x400?text=Fashion+Doll+4"
         },
- 
+
         "doll-5": {
             id: "doll-5",
             name: "Fashion Doll - Royal Collection",
             price: 39.99,
             image: "https://via.placeholder.com/400x400?text=Fashion+Doll+5"
         },
- 
+
         "doll-6": {
             id: "doll-6",
             name: "Fashion Doll - Limited Edition",
             price: 49.99,
             image: "https://via.placeholder.com/400x400?text=Fashion+Doll+6"
         }
- 
+
     };
- 
- 
+
+
     /*
      * GET CART
      */
- 
+
     function getCart() {
- 
+
         return JSON.parse(
             localStorage.getItem("cart") || "[]"
         );
- 
+
     }
- 
- 
+
+
     /*
      * SAVE CART
      */
- 
+
     function saveCart(cart) {
- 
+
         localStorage.setItem(
             "cart",
             JSON.stringify(cart)
         );
- 
+
     }
- 
- 
+
+
     /*
      * ADD PRODUCT TO CART
      */
- 
+
     function addToCart(productId) {
- 
+
         const product = products[productId];
- 
+
         if (!product) {
             return;
         }
- 
+
         let cart = getCart();
- 
+
         const existingProduct = cart.find(
             item => item.id === productId
         );
- 
+
         if (existingProduct) {
- 
+
             existingProduct.quantity += 1;
- 
+
         } else {
- 
+
             cart.push({
                 id: product.id,
                 name: product.name,
@@ -807,323 +853,322 @@
                 image: product.image,
                 quantity: 1
             });
- 
+
         }
- 
+
         saveCart(cart);
- 
+
         updateCartCount();
- 
- 
+
+
         /*
          * GA4 ADD TO CART
          */
- 
+
         gtag('event', 'add_to_cart', {
- 
+
             currency: 'USD',
- 
+
             value: product.price,
- 
+
             items: [{
                 item_id: product.id,
                 item_name: product.name,
                 price: product.price,
                 quantity: 1
             }]
- 
+
         });
- 
- 
+
+
         /*
          * Salesforce Interactions
          */
- 
+
         if (typeof SalesforceInteractions !== "undefined") {
- 
+
             SalesforceInteractions.sendEvent({
- 
+
                 interaction: {
                     name: "Add to Cart"
                 },
- 
+
                 user: {
                     attributes: {}
                 },
- 
+
                 source: {
                     channel: "Web"
                 },
- 
+
                 catalog: {
                     Product: {
                         id: product.id
                     }
                 }
- 
+
             });
- 
+
         }
- 
- 
+
+
         alert(product.name + " added to cart!");
- 
+
     }
- 
- 
+
+
     /*
      * UPDATE CART COUNTER
      */
- 
+
     function updateCartCount() {
- 
+
         const cart = getCart();
- 
+
         const count = cart.reduce(
             (total, item) => total + item.quantity,
             0
         );
- 
+
         const counter =
             document.getElementById("cart-count");
- 
+
         if (counter) {
             counter.textContent = count;
         }
- 
+
     }
- 
- 
+
+
     /*
      * WISHLIST
      */
- 
+
     function getWishlist() {
- 
+
         return JSON.parse(
             localStorage.getItem("wishlist") || "[]"
         );
- 
+
     }
- 
- 
+
+
     function saveWishlist(wishlist) {
- 
+
         localStorage.setItem(
             "wishlist",
             JSON.stringify(wishlist)
         );
- 
+
     }
- 
- 
+
+
     /*
      * TOGGLE WISHLIST
      */
- 
+
     function toggleWishlist(productId, button) {
- 
+
         const product = products[productId];
- 
+
         let wishlist = getWishlist();
- 
+
         const index = wishlist.indexOf(productId);
- 
+
         if (index === -1) {
- 
+
             wishlist.push(productId);
- 
+
             button.classList.add("active");
             button.textContent = "♥";
- 
+
             /*
              * GA4
              */
- 
+
             gtag('event', 'add_to_wishlist', {
- 
+
                 currency: 'USD',
- 
+
                 value: product.price,
- 
+
                 items: [{
                     item_id: product.id,
                     item_name: product.name,
                     price: product.price
                 }]
- 
+
             });
- 
- 
+
+
             /*
              * Salesforce
              */
- 
+
             if (typeof SalesforceInteractions !== "undefined") {
- 
+
                 SalesforceInteractions.sendEvent({
- 
+
                     interaction: {
                         name: "Add to Wishlist"
                     },
- 
+
                     catalog: {
                         Product: {
                             id: product.id
                         }
                     }
- 
+
                 });
- 
+
             }
- 
+
         } else {
- 
+
             wishlist.splice(index, 1);
- 
+
             button.classList.remove("active");
             button.textContent = "♡";
- 
+
         }
- 
+
         saveWishlist(wishlist);
- 
+
     }
- 
- 
+
+
     /*
      * RESTORE WISHLIST STATE
      */
- 
+
     function restoreWishlist() {
- 
+
         const wishlist = getWishlist();
- 
+
         document
             .querySelectorAll(".wishlist-button")
             .forEach(button => {
- 
+
                 const onclick =
                     button.getAttribute("onclick");
- 
+
                 const match =
                     onclick.match(/'([^']+)'/);
- 
+
                 if (!match) {
                     return;
                 }
- 
+
                 const productId = match[1];
- 
+
                 if (wishlist.includes(productId)) {
- 
+
                     button.classList.add("active");
                     button.textContent = "♥";
- 
+
                 }
- 
+
             });
- 
+
     }
- 
- 
+
+
     /*
      * INITIALIZE
      */
- 
+
     updateCartCount();
     restoreWishlist();
- 
- 
+
+
     /*
      * DATA LAYER TEST EVENTS
      */
- 
+
     window.dataLayer = window.dataLayer || [];
- 
+
     window.dataLayer.push({
- 
+
         event: 'page_view',
- 
+
         page_location: window.location.href,
- 
+
         page_path: window.location.pathname,
- 
+
         page_title: document.title,
- 
+
         ga_client_id: 'julia_test'
- 
+
     });
- 
+
     window.dataLayer.push({
- 
+
         event: 'pageView',
- 
+
         page_location: window.location.href,
- 
+
         page_path: window.location.pathname,
- 
+
         page_title: document.title
- 
+
     });
- 
+
     window.dataLayer.push({
- 
+
         event: 'websearch',
- 
+
         searchTerm: window.location.href
- 
+
     });
- 
+
     console.log(window.dataLayer);
- 
- 
+
+
     /*
      * SHOP DROPDOWN NAV
      */
- 
+
     (function () {
- 
+
         const toggle = document.getElementById('shopToggle');
         const menu = document.getElementById('shopMenu');
- 
+
         if (!toggle || !menu) {
             return;
         }
- 
+
         function closeMenu() {
             menu.classList.remove('open');
             toggle.setAttribute('aria-expanded', 'false');
         }
- 
+
         function openMenu() {
             menu.classList.add('open');
             toggle.setAttribute('aria-expanded', 'true');
         }
- 
+
         toggle.addEventListener('click', function (e) {
             e.stopPropagation();
             const isOpen = menu.classList.contains('open');
             isOpen ? closeMenu() : openMenu();
         });
- 
+
         document.addEventListener('click', function (e) {
             if (!menu.contains(e.target) && e.target !== toggle) {
                 closeMenu();
             }
         });
- 
+
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 closeMenu();
                 toggle.focus();
             }
         });
- 
+
     })();
- 
+
 </script>
- 
+
 </body>
 </html>
- 
