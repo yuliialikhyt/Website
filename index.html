@@ -5,6 +5,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+
     <!-- Salesforce Data Cloud / Interactions -->
     <script src="https://cdn.c360a.salesforce.com/beacon/c360a/88ae5198-09a4-42d7-8b2c-d98bb08a2d8e/scripts/c360a.min.js"></script>
 
@@ -62,7 +67,7 @@
     <!-- Nav revamp styles (self-contained, doesn't depend on styles.css) -->
     <style>
         :root{
-            --ink:#232159;
+            --ink:#2E0F49;
             --ink-light:#a35dfd;
             --coral:#ff9edf;
             --yellow:#FFC845;
@@ -96,25 +101,14 @@
             display:flex;
             align-items:center;
             gap:10px;
-            font-family:'Fredoka', sans-serif;
-            font-weight:600;
-            font-size:20px;
-            letter-spacing:0.3px;
-            color:var(--cream);
             text-decoration:none;
             flex-shrink:0;
         }
-        .logo-mark{
-            display:grid;
-            grid-template-columns:9px 9px;
-            grid-template-rows:9px 9px;
-            gap:2px;
+        .logo img{
+            height:42px;
+            width:auto;
+            display:block;
         }
-        .logo-mark span{ border-radius:2px; }
-        .logo-mark span:nth-child(1){ background:var(--coral); }
-        .logo-mark span:nth-child(2){ background:var(--yellow); }
-        .logo-mark span:nth-child(3){ background:var(--yellow); }
-        .logo-mark span:nth-child(4){ background:var(--coral); }
 
         .main-nav{
             display:flex;
@@ -376,6 +370,7 @@
             display:grid;
             grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
             gap:24px;
+            align-items:stretch;
         }
         .product-card{
             background:#fff;
@@ -385,6 +380,7 @@
             display:flex;
             flex-direction:column;
             gap:6px;
+            height:100%;
         }
         .product-image-container{
             position:relative;
@@ -392,13 +388,14 @@
             aspect-ratio:1 / 1;
             border-radius:10px;
             overflow:hidden;
-            background:#F4F2FA;
+            background:#fff;
         }
         .product-image-container img{
             width:100%;
             height:100%;
             object-fit:cover;
             display:block;
+            background:#fff;
         }
         .product-card h3{
             font-family:'Fredoka', sans-serif;
@@ -439,7 +436,8 @@
             font-weight:600;
         }
 
-        /* Add to Cart button: purple, fills card width */
+        /* Add to Cart button: purple, fills card width, pinned to the bottom of the card
+           so buttons line up across cards even when descriptions differ in length */
         .add-cart-button{
             background:var(--ink-light);
             color:#fff;
@@ -452,7 +450,8 @@
             cursor:pointer;
             transition:filter 0.15s ease;
             width:100%;
-            margin-top:4px;
+            margin-top:auto;
+            padding-top:10px;
         }
         .add-cart-button:hover, .add-cart-button:focus-visible{
             filter:brightness(1.1);
@@ -505,8 +504,7 @@
     <div class="header-inner">
 
         <a href="index.html" class="logo">
-            <span class="logo-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
-            Martel
+            <img src="images/martel-logo.png" alt="Martel">
         </a>
 
         <nav class="main-nav" aria-label="Main">
