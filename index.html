@@ -11,60 +11,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
 
-    <!-- Salesforce Data Cloud / Interactions -->
-    <script src="https://cdn.c360a.salesforce.com/beacon/c360a/88ae5198-09a4-42d7-8b2c-d98bb08a2d8e/scripts/c360a.min.js"></script>
-
-    <!-- Google Tag Manager -->
-    <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PN2N9TCM');
-    </script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Google tag -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F3W8L64Z71"></script>
-
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag(){
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-        gtag('config', 'G-F3W8L64Z71');
-
-        gtag('get', 'G-F3W8L64Z71', 'client_id', (clientId) => {
-            gtag('event', 'page_view', {
-                ga_client_id: clientId
-            });
-        });
-
-        SalesforceInteractions.init({
-            consents: [{
-                provider: "OneTrust",
-                purpose: SalesforceInteractions.ConsentPurpose.Tracking,
-                status: SalesforceInteractions.ConsentStatus.OptIn
-            }]
-        }).then(() => {
-            SalesforceInteractions.setLoggingLevel(4);
-
-            console.log(
-                "Anonymous ID:",
-                SalesforceInteractions.getAnonymousId()
-            );
-
-            SalesforceInteractions.sendEvent({
-                interaction: {
-                    name: "Page View"
-                }
-            });
-        });
-    </script>
-
     <!-- Nav revamp styles (self-contained, doesn't depend on styles.css) -->
     <style>
         :root{
@@ -486,17 +432,6 @@
 </head>
 
 <body>
-
-<!-- Google Tag Manager (noscript) -->
-<noscript>
-    <iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-PN2N9TCM"
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden">
-    </iframe>
-</noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 
 <!-- HEADER -->
@@ -1009,60 +944,6 @@
 
         updateCartCount();
 
-
-        /*
-         * GA4 ADD TO CART
-         */
-
-        gtag('event', 'add_to_cart', {
-
-            currency: 'USD',
-
-            value: product.price,
-
-            items: [{
-                item_id: product.id,
-                item_name: product.name,
-                price: product.price,
-                quantity: 1
-            }]
-
-        });
-
-
-        /*
-         * Salesforce Interactions
-         */
-
-        if (typeof SalesforceInteractions !== "undefined") {
-
-            SalesforceInteractions.sendEvent({
-
-                interaction: {
-                    name: "Add to Cart"
-                },
-
-                user: {
-                    attributes: {}
-                },
-
-                source: {
-                    channel: "Web"
-                },
-
-                catalog: {
-                    Product: {
-                        id: product.id
-                    }
-                }
-
-            });
-
-        }
-
-
-        alert(product.name + " added to cart!");
-
     }
 
 
@@ -1131,46 +1012,7 @@
             button.classList.add("active");
             button.textContent = "♥";
 
-            /*
-             * GA4
-             */
-
-            gtag('event', 'add_to_wishlist', {
-
-                currency: 'USD',
-
-                value: product.price,
-
-                items: [{
-                    item_id: product.id,
-                    item_name: product.name,
-                    price: product.price
-                }]
-
-            });
-
-
-            /*
-             * Salesforce
-             */
-
-            if (typeof SalesforceInteractions !== "undefined") {
-
-                SalesforceInteractions.sendEvent({
-
-                    interaction: {
-                        name: "Add to Wishlist"
-                    },
-
-                    catalog: {
-                        Product: {
-                            id: product.id
-                        }
-                    }
-
-                });
-
-            }
+    
 
         } else {
 
@@ -1228,49 +1070,6 @@
 
     updateCartCount();
     restoreWishlist();
-
-
-    /*
-     * DATA LAYER TEST EVENTS
-     */
-
-    window.dataLayer = window.dataLayer || [];
-
-    window.dataLayer.push({
-
-        event: 'page_view',
-
-        page_location: window.location.href,
-
-        page_path: window.location.pathname,
-
-        page_title: document.title,
-
-        ga_client_id: 'julia_test'
-
-    });
-
-    window.dataLayer.push({
-
-        event: 'pageView',
-
-        page_location: window.location.href,
-
-        page_path: window.location.pathname,
-
-        page_title: document.title
-
-    });
-
-    window.dataLayer.push({
-
-        event: 'websearch',
-
-        searchTerm: window.location.href
-
-    });
-
-    console.log(window.dataLayer);
 
 
     /*
