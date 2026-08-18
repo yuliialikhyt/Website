@@ -10,7 +10,63 @@
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+    
+<!-- Consent banner -->
+<div id="consent-banner" style="position:fixed;bottom:0;left:0;right:0;background:#2E0F49;color:#FAF7F2;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:1000;font-family:'Inter',sans-serif;">
+    <p style="margin:0;font-size:14px;">We use cookies to personalize your experience and improve our marketing.</p>
+    <div style="display:flex;gap:8px;flex-shrink:0;">
+        <button id="opt-out" style="background:none;border:1px solid #FAF7F2;color:#FAF7F2;padding:8px 16px;border-radius:8px;cursor:pointer;">Decline</button>
+        <button id="opt-in" style="background:#a35dfd;border:none;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;">Accept</button>
+    </div>
+</div>
 
+<script>
+function hideBanner() {
+    const banner = document.getElementById('consent-banner');
+    if (banner) banner.style.display = 'none';
+}
+
+SalesforceInteractions.init({
+    cookieDomain: "domain.com", // replace with your actual domain
+    consents: new Promise((resolve) => {
+
+        document.getElementById("opt-in").addEventListener(
+            "click",
+            () => {
+                resolve([
+                    {
+                        provider: "Test Provider",
+                        purpose: "Tracking",
+                        status: SalesforceInteractions.ConsentStatus.OptIn,
+                    },
+                ]);
+                hideBanner();
+            },
+            { once: true },
+        );
+
+        document.getElementById("opt-out").addEventListener(
+            "click",
+            () => {
+                resolve([
+                    {
+                        provider: "Test Provider",
+                        purpose: "Tracking",
+                        status: SalesforceInteractions.ConsentStatus.OptOut,
+                    },
+                ]);
+                hideBanner();
+            },
+            { once: true },
+        );
+
+    }),
+}).then(() => {
+    console.log("SalesforceInteractions initialized");
+}).catch((err) => {
+    console.error("SalesforceInteractions init failed:", err);
+});
+</script>
     <!-- Nav revamp styles (self-contained, doesn't depend on styles.css) -->
     <style>
         :root{
