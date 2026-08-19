@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login - Martel</title>
+    <title>Create Account - Martel</title>
     <script src="https://cdn.c360a.salesforce.com/beacon/c360a/344f540e-1bf6-4500-8b84-fd9578e5c202/scripts/c360a.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -20,6 +20,7 @@
             --cream:#FAF7F2;
             --line: rgba(250,247,242,0.14);
             --error:#E0457B;
+            --success:#2E9E6C;
         }
         *{box-sizing:border-box;}
 
@@ -121,7 +122,7 @@
             padding:0 4px;
         }
 
-        /* LOGIN FORM */
+        /* CREATE ACCOUNT FORM */
         .login-wrap{
             max-width:420px;
             margin:64px auto;
@@ -182,6 +183,11 @@
         .field-error.show{
             display:block;
         }
+        .field-hint{
+            font-size:12px;
+            color:#6B6890;
+            margin-top:6px;
+        }
         .form-error{
             display:none;
             background:#FBE7EF;
@@ -194,6 +200,54 @@
         .form-error.show{
             display:block;
         }
+
+        /* Password strength meter */
+        .strength-meter{
+            display:flex;
+            gap:4px;
+            margin-top:8px;
+        }
+        .strength-bar{
+            height:4px;
+            flex:1;
+            border-radius:2px;
+            background:#ECE9F4;
+            transition:background 0.15s ease;
+        }
+        .strength-label{
+            font-size:12px;
+            margin-top:6px;
+            color:#6B6890;
+        }
+        .strength-weak .strength-bar:nth-child(1){ background:var(--error); }
+        .strength-fair .strength-bar:nth-child(1),
+        .strength-fair .strength-bar:nth-child(2){ background:var(--yellow); }
+        .strength-good .strength-bar:nth-child(1),
+        .strength-good .strength-bar:nth-child(2),
+        .strength-good .strength-bar:nth-child(3){ background:var(--ink-light); }
+        .strength-strong .strength-bar{ background:var(--success); }
+
+        .checkbox-field{
+            display:flex;
+            align-items:flex-start;
+            gap:10px;
+            margin-bottom:20px;
+        }
+        .checkbox-field input{
+            margin-top:3px;
+            flex-shrink:0;
+        }
+        .checkbox-field label{
+            font-size:13px;
+            color:#6B6890;
+            line-height:1.4;
+        }
+        .checkbox-field a{
+            color:var(--ink-light);
+            font-weight:600;
+            text-decoration:none;
+        }
+
         .login-submit{
             width:100%;
             background:var(--ink-light);
@@ -259,17 +313,23 @@
     </div>
 </header>
 
-<!-- LOGIN FORM -->
+<!-- CREATE ACCOUNT FORM -->
 <main class="login-wrap">
     <div class="login-card">
-        <h1>Welcome back</h1>
-        <p class="subtitle">Log in to your Martel account</p>
+        <h1>Create your account</h1>
+        <p class="subtitle">Join Martel to track orders and save favorites</p>
 
         <div class="form-error" id="formError">
-            That email and password combination didn't work. Try again.
+            An account with that email already exists.
         </div>
 
-        <form id="loginForm" novalidate>
+        <form id="createAccountForm" novalidate>
+
+            <div class="field">
+                <label for="fullName">Full name</label>
+                <input type="text" id="fullName" name="fullName" autocomplete="name" required>
+                <p class="field-error" id="fullNameError">Enter your name.</p>
+            </div>
 
             <div class="field">
                 <label for="email">Email</label>
@@ -279,16 +339,37 @@
 
             <div class="field">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" autocomplete="current-password" required minlength="8">
+                <input type="password" id="password" name="password" autocomplete="new-password" required minlength="8">
+                <div class="strength-meter" id="strengthMeter">
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                </div>
+                <p class="strength-label" id="strengthLabel">Use 8+ characters</p>
                 <p class="field-error" id="passwordError">Password must be at least 8 characters.</p>
             </div>
 
-            <button type="submit" class="login-submit" id="submitBtn">Log In</button>
+            <div class="field">
+                <label for="confirmPassword">Confirm password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" required>
+                <p class="field-error" id="confirmPasswordError">Passwords don't match.</p>
+            </div>
+
+            <div class="checkbox-field">
+                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                <label for="agreeTerms">
+                    I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                </label>
+            </div>
+            <p class="field-error" id="agreeTermsError" style="margin-top:-12px; margin-bottom:16px;">You must agree to continue.</p>
+
+            <button type="submit" class="login-submit" id="submitBtn">Create Account</button>
 
         </form>
 
         <p class="login-footer">
-            Don't have an account? <a href="create_account.html" id="createAccountLink">Create one</a>
+            Already have an account? <a href="login.html">Log in</a>
         </p>
     </div>
 </main>
@@ -317,21 +398,33 @@
 
     /*
      * MOCK USER STORE
-     * No backend here — this validates the form and persists a session
-     * to localStorage so the rest of the demo site can read login state.
-     * Swap validateCredentials() for a real API call when one exists.
+     * No backend here — this validates the form and persists new users
+     * to localStorage so login.html can authenticate against them.
+     * Swap createUser() for a real API call when one exists.
      */
 
     function getRegisteredUsers() {
         return JSON.parse(localStorage.getItem("users") || "[]");
     }
 
-    function validateCredentials(email, password) {
+    function saveRegisteredUsers(users) {
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+
+    function emailExists(email) {
         const users = getRegisteredUsers();
-        const match = users.find(
-            u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-        );
-        return !!match;
+        return users.some(u => u.email.toLowerCase() === email.toLowerCase());
+    }
+
+    function createUser(fullName, email, password) {
+        const users = getRegisteredUsers();
+        users.push({
+            fullName: fullName,
+            email: email,
+            password: password,
+            createdAt: new Date().toISOString()
+        });
+        saveRegisteredUsers(users);
     }
 
     function startSession(email) {
@@ -343,15 +436,30 @@
 
 
     /*
-     * VALIDATION HELPERS
+     * FIELD REFERENCES
      */
 
+    const fullNameInput = document.getElementById("fullName");
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+    const agreeTermsInput = document.getElementById("agreeTerms");
+
+    const fullNameError = document.getElementById("fullNameError");
     const emailError = document.getElementById("emailError");
     const passwordError = document.getElementById("passwordError");
+    const confirmPasswordError = document.getElementById("confirmPasswordError");
+    const agreeTermsError = document.getElementById("agreeTermsError");
     const formError = document.getElementById("formError");
     const submitBtn = document.getElementById("submitBtn");
+
+    const strengthMeter = document.getElementById("strengthMeter");
+    const strengthLabel = document.getElementById("strengthLabel");
+
+
+    /*
+     * VALIDATION HELPERS
+     */
 
     function isValidEmail(value) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -367,8 +475,42 @@
         errorEl.classList.add("show");
     }
 
+    function passwordScore(value) {
+        let score = 0;
+        if (value.length >= 8) score++;
+        if (value.length >= 12) score++;
+        if (/[A-Z]/.test(value) && /[a-z]/.test(value)) score++;
+        if (/[0-9]/.test(value) && /[^A-Za-z0-9]/.test(value)) score++;
+        return Math.min(score, 4);
+    }
+
+    function updateStrengthMeter() {
+        const value = passwordInput.value;
+        const score = value.length === 0 ? 0 : Math.max(passwordScore(value), 1);
+
+        strengthMeter.className = "strength-meter";
+
+        if (value.length === 0) {
+            strengthLabel.textContent = "Use 8+ characters";
+            return;
+        }
+
+        const levels = ["weak", "weak", "fair", "good", "strong"];
+        const labels = ["Weak", "Weak", "Fair", "Good", "Strong"];
+
+        strengthMeter.classList.add("strength-" + levels[score]);
+        strengthLabel.textContent = labels[score] + " password";
+    }
+
     function validateForm() {
         let valid = true;
+
+        if (fullNameInput.value.trim().length === 0) {
+            setFieldInvalid(fullNameInput, fullNameError);
+            valid = false;
+        } else {
+            setFieldValid(fullNameInput, fullNameError);
+        }
 
         if (!isValidEmail(emailInput.value.trim())) {
             setFieldInvalid(emailInput, emailError);
@@ -384,6 +526,20 @@
             setFieldValid(passwordInput, passwordError);
         }
 
+        if (confirmPasswordInput.value !== passwordInput.value || confirmPasswordInput.value.length === 0) {
+            setFieldInvalid(confirmPasswordInput, confirmPasswordError);
+            valid = false;
+        } else {
+            setFieldValid(confirmPasswordInput, confirmPasswordError);
+        }
+
+        if (!agreeTermsInput.checked) {
+            agreeTermsError.classList.add("show");
+            valid = false;
+        } else {
+            agreeTermsError.classList.remove("show");
+        }
+
         return valid;
     }
 
@@ -392,7 +548,7 @@
      * FORM SUBMISSION
      */
 
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
+    document.getElementById("createAccountForm").addEventListener("submit", function (e) {
         e.preventDefault();
 
         formError.classList.remove("show");
@@ -401,42 +557,63 @@
             return;
         }
 
+        const fullName = fullNameInput.value.trim();
         const email = emailInput.value.trim();
         const password = passwordInput.value;
 
+        if (emailExists(email)) {
+            formError.classList.add("show");
+            return;
+        }
+
         submitBtn.disabled = true;
-        submitBtn.textContent = "Logging in...";
+        submitBtn.textContent = "Creating account...";
 
         // Simulated latency so the disabled/loading state is visible in testing.
         setTimeout(() => {
 
-            if (validateCredentials(email, password)) {
-
-                startSession(email);
-                window.location.href = "index.html";
-
-            } else {
-
-                formError.classList.add("show");
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Log In";
-
-            }
+            createUser(fullName, email, password);
+            startSession(email);
+            window.location.href = "index.html";
 
         }, 400);
 
     });
 
-    // Clear inline field errors as the user corrects them
+    // Live validation as fields are corrected
+    fullNameInput.addEventListener("input", () => {
+        if (fullNameInput.getAttribute("aria-invalid") === "true" && fullNameInput.value.trim().length > 0) {
+            setFieldValid(fullNameInput, fullNameError);
+        }
+    });
+
     emailInput.addEventListener("input", () => {
         if (emailInput.getAttribute("aria-invalid") === "true" && isValidEmail(emailInput.value.trim())) {
             setFieldValid(emailInput, emailError);
         }
+        formError.classList.remove("show");
     });
 
     passwordInput.addEventListener("input", () => {
+        updateStrengthMeter();
         if (passwordInput.getAttribute("aria-invalid") === "true" && passwordInput.value.length >= 8) {
             setFieldValid(passwordInput, passwordError);
+        }
+        // Re-check confirm match live if it's already been touched
+        if (confirmPasswordInput.getAttribute("aria-invalid") === "true" && confirmPasswordInput.value === passwordInput.value) {
+            setFieldValid(confirmPasswordInput, confirmPasswordError);
+        }
+    });
+
+    confirmPasswordInput.addEventListener("input", () => {
+        if (confirmPasswordInput.getAttribute("aria-invalid") === "true" && confirmPasswordInput.value === passwordInput.value) {
+            setFieldValid(confirmPasswordInput, confirmPasswordError);
+        }
+    });
+
+    agreeTermsInput.addEventListener("change", () => {
+        if (agreeTermsInput.checked) {
+            agreeTermsError.classList.remove("show");
         }
     });
 
