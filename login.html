@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Martel</title>
+    <script src="https://cdn.c360a.salesforce.com/beacon/c360a/344f540e-1bf6-4500-8b84-fd9578e5c202/scripts/c360a.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+
+    <style>
+        :root{
+            --ink:#2E0F49;
+            --ink-light:#a35dfd;
+            --coral:#ff9edf;
+            --yellow:#FFC845;
+            --cream:#FAF7F2;
+            --line: rgba(250,247,242,0.14);
+            --error:#E0457B;
+        }
+        *{box-sizing:border-box;}
+
+        html, body{
+            margin:0;
+            padding:0;
+            width:100%;
+            background:#FAF7F2;
+        }
+
+        .site-header{
+            background:var(--ink);
+            font-family:'Inter', sans-serif;
+        }
+        .header-inner{
+            max-width:1200px;
+            margin:0 auto;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:16px;
+            padding:0 24px;
+            height:68px;
+        }
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            text-decoration:none;
+            flex-shrink:0;
+        }
+        .logo img{
+            height:42px;
+            width:auto;
+            display:block;
+        }
+        .main-nav{
+            display:flex;
+            align-items:center;
+            gap:2px;
+            font-family:'Fredoka', sans-serif;
+        }
+        .nav-link{
+            color:var(--cream);
+            text-decoration:none;
+            font-weight:500;
+            font-size:15px;
+            padding:10px 16px;
+            border-radius:10px;
+            transition:background 0.15s ease;
+        }
+        .nav-link:hover, .nav-link:focus-visible{
+            background:var(--ink-light);
+            outline:none;
+        }
+        .header-actions{
+            display:flex;
+            align-items:center;
+            gap:6px;
+            flex-shrink:0;
+        }
+        .header-account{
+            display:flex;
+            align-items:center;
+            gap:6px;
+            color:var(--cream);
+            text-decoration:none;
+            font-family:'Inter', sans-serif;
+            font-weight:500;
+            font-size:14px;
+            padding:8px 14px;
+            border-radius:10px;
+            background:var(--ink-light);
+        }
+        .header-cart{
+            display:flex;
+            align-items:center;
+            gap:6px;
+            color:var(--ink);
+            background:var(--coral);
+            text-decoration:none;
+            font-family:'Inter', sans-serif;
+            font-weight:600;
+            font-size:14px;
+            padding:8px 14px;
+            border-radius:10px;
+            margin-left:2px;
+        }
+        .header-cart #cart-count{
+            background:var(--ink);
+            color:var(--cream);
+            font-size:12px;
+            min-width:18px;
+            height:18px;
+            border-radius:9px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:0 4px;
+        }
+
+        /* LOGIN FORM */
+        .login-wrap{
+            max-width:420px;
+            margin:64px auto;
+            padding:0 24px;
+            font-family:'Inter', sans-serif;
+        }
+        .login-card{
+            background:#fff;
+            border:1px solid #ECE9F4;
+            border-radius:16px;
+            padding:32px;
+        }
+        .login-card h1{
+            font-family:'Fredoka', sans-serif;
+            font-size:24px;
+            font-weight:600;
+            color:var(--ink);
+            margin:0 0 6px;
+        }
+        .login-card .subtitle{
+            font-size:14px;
+            color:#6B6890;
+            margin:0 0 24px;
+        }
+        .field{
+            margin-bottom:16px;
+        }
+        .field label{
+            display:block;
+            font-size:13px;
+            font-weight:600;
+            color:var(--ink);
+            margin-bottom:6px;
+        }
+        .field input{
+            width:100%;
+            padding:11px 14px;
+            border:1px solid #DDD8EC;
+            border-radius:10px;
+            font-family:'Inter', sans-serif;
+            font-size:14px;
+            color:var(--ink);
+            outline:none;
+            transition:border-color 0.15s ease;
+        }
+        .field input:focus{
+            border-color:var(--ink-light);
+        }
+        .field input[aria-invalid="true"]{
+            border-color:var(--error);
+        }
+        .field-error{
+            display:none;
+            font-size:12px;
+            color:var(--error);
+            margin-top:6px;
+        }
+        .field-error.show{
+            display:block;
+        }
+        .form-error{
+            display:none;
+            background:#FBE7EF;
+            color:var(--error);
+            font-size:13px;
+            padding:10px 14px;
+            border-radius:10px;
+            margin-bottom:16px;
+        }
+        .form-error.show{
+            display:block;
+        }
+        .login-submit{
+            width:100%;
+            background:var(--ink-light);
+            color:#fff;
+            border:none;
+            border-radius:10px;
+            padding:12px 18px;
+            font-family:'Inter', sans-serif;
+            font-weight:600;
+            font-size:14px;
+            cursor:pointer;
+            transition:filter 0.15s ease, opacity 0.15s ease;
+        }
+        .login-submit:hover, .login-submit:focus-visible{
+            filter:brightness(1.08);
+            outline:none;
+        }
+        .login-submit:disabled{
+            opacity:0.6;
+            cursor:not-allowed;
+        }
+        .login-footer{
+            text-align:center;
+            font-size:13px;
+            color:#6B6890;
+            margin-top:20px;
+        }
+        .login-footer a{
+            color:var(--ink-light);
+            font-weight:600;
+            text-decoration:none;
+        }
+        .login-footer a:hover{
+            text-decoration:underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+    <div class="header-inner">
+        <a href="index.html" class="logo">
+            <img src="images/martel-logo.png" alt="Martel">
+        </a>
+
+        <nav class="main-nav" aria-label="Main">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="index.html#products" class="nav-link">Shop</a>
+            <a href="#" class="nav-link">Sale</a>
+            <a href="#" class="nav-link">Contact Us</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="login.html" class="header-account">Login</a>
+            <a href="cart.html" class="header-cart">
+                <span class="cart-icon">🛍</span>
+                <span class="cart-text">Cart</span>
+                <span id="cart-count">0</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- LOGIN FORM -->
+<main class="login-wrap">
+    <div class="login-card">
+        <h1>Welcome back</h1>
+        <p class="subtitle">Log in to your Martel account</p>
+
+        <div class="form-error" id="formError">
+            That email and password combination didn't work. Try again.
+        </div>
+
+        <form id="loginForm" novalidate>
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+                <p class="field-error" id="emailError">Enter a valid email address.</p>
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required minlength="8">
+                <p class="field-error" id="passwordError">Password must be at least 8 characters.</p>
+            </div>
+
+            <button type="submit" class="login-submit" id="submitBtn">Log In</button>
+
+        </form>
+
+        <p class="login-footer">
+            Don't have an account? <a href="#" id="createAccountLink">Create one</a>
+        </p>
+    </div>
+</main>
+
+<script>
+
+    /*
+     * CART COUNT (shared with index.html)
+     */
+
+    function getCart() {
+        return JSON.parse(localStorage.getItem("cart") || "[]");
+    }
+
+    function updateCartCount() {
+        const cart = getCart();
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        const counter = document.getElementById("cart-count");
+        if (counter) {
+            counter.textContent = count;
+        }
+    }
+
+    updateCartCount();
+
+
+    /*
+     * MOCK USER STORE
+     * No backend here — this validates the form and persists a session
+     * to localStorage so the rest of the demo site can read login state.
+     * Swap validateCredentials() for a real API call when one exists.
+     */
+
+    function getRegisteredUsers() {
+        return JSON.parse(localStorage.getItem("users") || "[]");
+    }
+
+    function validateCredentials(email, password) {
+        const users = getRegisteredUsers();
+        const match = users.find(
+            u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+        );
+        return !!match;
+    }
+
+    function startSession(email) {
+        localStorage.setItem("session", JSON.stringify({
+            email: email,
+            loggedInAt: new Date().toISOString()
+        }));
+    }
+
+
+    /*
+     * VALIDATION HELPERS
+     */
+
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const formError = document.getElementById("formError");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function isValidEmail(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    function setFieldValid(input, errorEl) {
+        input.setAttribute("aria-invalid", "false");
+        errorEl.classList.remove("show");
+    }
+
+    function setFieldInvalid(input, errorEl) {
+        input.setAttribute("aria-invalid", "true");
+        errorEl.classList.add("show");
+    }
+
+    function validateForm() {
+        let valid = true;
+
+        if (!isValidEmail(emailInput.value.trim())) {
+            setFieldInvalid(emailInput, emailError);
+            valid = false;
+        } else {
+            setFieldValid(emailInput, emailError);
+        }
+
+        if (passwordInput.value.length < 8) {
+            setFieldInvalid(passwordInput, passwordError);
+            valid = false;
+        } else {
+            setFieldValid(passwordInput, passwordError);
+        }
+
+        return valid;
+    }
+
+
+    /*
+     * FORM SUBMISSION
+     */
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        formError.classList.remove("show");
+
+        if (!validateForm()) {
+            return;
+        }
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Logging in...";
+
+        // Simulated latency so the disabled/loading state is visible in testing.
+        setTimeout(() => {
+
+            if (validateCredentials(email, password)) {
+
+                startSession(email);
+                window.location.href = "index.html";
+
+            } else {
+
+                formError.classList.add("show");
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Log In";
+
+            }
+
+        }, 400);
+
+    });
+
+    // Clear inline field errors as the user corrects them
+    emailInput.addEventListener("input", () => {
+        if (emailInput.getAttribute("aria-invalid") === "true" && isValidEmail(emailInput.value.trim())) {
+            setFieldValid(emailInput, emailError);
+        }
+    });
+
+    passwordInput.addEventListener("input", () => {
+        if (passwordInput.getAttribute("aria-invalid") === "true" && passwordInput.value.length >= 8) {
+            setFieldValid(passwordInput, passwordError);
+        }
+    });
+
+</script>
+
+</body>
+</html>
