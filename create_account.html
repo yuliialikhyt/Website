@@ -397,41 +397,28 @@
 
 
     /*
-     * MOCK USER STORE
-     * No backend here — this validates the form and persists new users
-     * to localStorage so login.html can authenticate against them.
-     * Swap createUser() for a real API call when one exists.
+     * API CONFIG
+     * Update this if the backend runs somewhere other than localhost:3000.
      */
 
-    function getRegisteredUsers() {
-        return JSON.parse(localStorage.getItem("users") || "[]");
-    }
+    const API_BASE = "http://localhost:5050";
 
-    function saveRegisteredUsers(users) {
-        localStorage.setItem("users", JSON.stringify(users));
-    }
-
-    function emailExists(email) {
-        const users = getRegisteredUsers();
-        return users.some(u => u.email.toLowerCase() === email.toLowerCase());
-    }
-
-    function createUser(fullName, email, password) {
-        const users = getRegisteredUsers();
-        users.push({
-            fullName: fullName,
-            email: email,
-            password: password,
-            createdAt: new Date().toISOString()
+    async function signupRequest(fullName, email, password) {
+        const response = await fetch(`${API_BASE}/api/auth/signup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include", // sends/receives the httpOnly session cookie
+            body: JSON.stringify({ fullName, email, password }),
         });
-        saveRegisteredUsers(users);
-    }
 
-    function startSession(email) {
-        localStorage.setItem("session", JSON.stringify({
-            email: email,
-            loggedInAt: new Date().toISOString()
-        }));
+        let data = {};
+        try {
+            data = await response.json();
+        } catch {
+            // No JSON body (e.g. network error) — fall through with empty data.
+        }
+
+        return { ok: response.ok, status: response.status, data };
     }
 
 
@@ -548,7 +535,7 @@
      * FORM SUBMISSION
      */
 
-    document.getElementById("createAccountForm").addEventListener("submit", function (e) {
+    document.getElementById("createAccountForm").addEventListener("submit", async function (e) {
         e.preventDefault();
 
         formError.classList.remove("show");
@@ -561,22 +548,35 @@
         const email = emailInput.value.trim();
         const password = passwordInput.value;
 
-        if (emailExists(email)) {
-            formError.classList.add("show");
-            return;
-        }
-
         submitBtn.disabled = true;
         submitBtn.textContent = "Creating account...";
 
-        // Simulated latency so the disabled/loading state is visible in testing.
-        setTimeout(() => {
+        try {
 
-            createUser(fullName, email, password);
-            startSession(email);
-            window.location.href = "index.html";
+            const { ok, data } = await signupRequest(fullName, email, password);
 
-        }, 400);
+            if (ok) {
+
+                window.location.href = "index.html";
+
+            } else {
+
+                formError.textContent = data.error || "Something went wrong. Please try again.";
+                formError.classList.add("show");
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Create Account";
+
+            }
+
+        } catch (err) {
+
+            console.error("Signup request failed:", err);
+            formError.textContent = "Couldn't reach the server. Please try again.";
+            formError.classList.add("show");
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Create Account";
+
+        }
 
     });
 

@@ -10,63 +10,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
-    
-<!-- Consent banner -->
-<div id="consent-banner" style="position:fixed;bottom:0;left:0;right:0;background:#2E0F49;color:#FAF7F2;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:1000;font-family:'Inter',sans-serif;">
-    <p style="margin:0;font-size:14px;">We use cookies to personalize your experience and improve our marketing.</p>
-    <div style="display:flex;gap:8px;flex-shrink:0;">
-        <button id="opt-out" style="background:none;border:1px solid #FAF7F2;color:#FAF7F2;padding:8px 16px;border-radius:8px;cursor:pointer;">Decline</button>
-        <button id="opt-in" style="background:#a35dfd;border:none;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;">Accept</button>
-    </div>
-</div>
 
-<script>
-function hideBanner() {
-    const banner = document.getElementById('consent-banner');
-    if (banner) banner.style.display = 'none';
-}
 
-SalesforceInteractions.init({
-    cookieDomain: "juliatesting.space", // replace with your actual domain
-    consents: new Promise((resolve) => {
-
-        document.getElementById("opt-in").addEventListener(
-            "click",
-            () => {
-                resolve([
-                    {
-                        provider: "Test Provider",
-                        purpose: "Tracking",
-                        status: SalesforceInteractions.ConsentStatus.OptIn,
-                    },
-                ]);
-                hideBanner();
-            },
-            { once: true },
-        );
-
-        document.getElementById("opt-out").addEventListener(
-            "click",
-            () => {
-                resolve([
-                    {
-                        provider: "Test Provider",
-                        purpose: "Tracking",
-                        status: SalesforceInteractions.ConsentStatus.OptOut,
-                    },
-                ]);
-                hideBanner();
-            },
-            { once: true },
-        );
-
-    }),
-}).then(() => {
-    console.log("SalesforceInteractions initialized");
-}).catch((err) => {
-    console.error("SalesforceInteractions init failed:", err);
-});
-</script>
     <!-- Nav revamp styles (self-contained, doesn't depend on styles.css) -->
     <style>
         :root{
@@ -272,9 +217,67 @@ SalesforceInteractions.init({
             padding:8px 14px;
             border-radius:10px;
             transition:background 0.15s ease;
+            background:none;
+            border:none;
+            cursor:pointer;
         }
         .header-account:hover, .header-account:focus-visible{
             background:var(--ink-light);
+            outline:none;
+        }
+
+        .header-account-menu{
+            position:relative;
+        }
+        .header-account-dropdown{
+            position:absolute;
+            top:calc(100% + 8px);
+            right:0;
+            background:var(--ink-light);
+            border-radius:12px;
+            padding:8px;
+            min-width:180px;
+            box-shadow:0 12px 28px rgba(20,18,50,0.35);
+            opacity:0;
+            transform:translateY(-6px);
+            pointer-events:none;
+            transition:opacity 0.16s ease, transform 0.16s ease;
+            border:1px solid var(--line);
+            z-index:20;
+        }
+        .header-account-dropdown.open{
+            opacity:1;
+            transform:translateY(0);
+            pointer-events:auto;
+        }
+        .header-account-dropdown .account-email{
+            display:block;
+            color:var(--cream);
+            font-size:12px;
+            opacity:0.75;
+            padding:8px 12px 4px;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+        .header-account-dropdown button{
+            display:block;
+            width:100%;
+            text-align:left;
+            background:none;
+            border:none;
+            color:var(--cream);
+            text-decoration:none;
+            font-size:14px;
+            font-weight:500;
+            font-family:'Inter', sans-serif;
+            padding:10px 12px;
+            border-radius:8px;
+            cursor:pointer;
+            transition:background 0.12s ease;
+        }
+        .header-account-dropdown button:hover, .header-account-dropdown button:focus-visible{
+            background:var(--ink);
             outline:none;
         }
 
@@ -489,6 +492,62 @@ SalesforceInteractions.init({
 
 <body>
 
+<!-- Consent banner -->
+<div id="consent-banner" style="position:fixed;bottom:0;left:0;right:0;background:#2E0F49;color:#FAF7F2;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:1000;font-family:'Inter',sans-serif;">
+    <p style="margin:0;font-size:14px;">We use cookies to personalize your experience and improve our marketing.</p>
+    <div style="display:flex;gap:8px;flex-shrink:0;">
+        <button id="opt-out" style="background:none;border:1px solid #FAF7F2;color:#FAF7F2;padding:8px 16px;border-radius:8px;cursor:pointer;">Decline</button>
+        <button id="opt-in" style="background:#a35dfd;border:none;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;">Accept</button>
+    </div>
+</div>
+
+<script>
+function hideBanner() {
+    const banner = document.getElementById('consent-banner');
+    if (banner) banner.style.display = 'none';
+}
+
+SalesforceInteractions.init({
+    cookieDomain: "juliatesting.space", // replace with your actual domain
+    consents: new Promise((resolve) => {
+
+        document.getElementById("opt-in").addEventListener(
+            "click",
+            () => {
+                resolve([
+                    {
+                        provider: "Test Provider",
+                        purpose: "Tracking",
+                        status: SalesforceInteractions.ConsentStatus.OptIn,
+                    },
+                ]);
+                hideBanner();
+            },
+            { once: true },
+        );
+
+        document.getElementById("opt-out").addEventListener(
+            "click",
+            () => {
+                resolve([
+                    {
+                        provider: "Test Provider",
+                        purpose: "Tracking",
+                        status: SalesforceInteractions.ConsentStatus.OptOut,
+                    },
+                ]);
+                hideBanner();
+            },
+            { once: true },
+        );
+
+    }),
+}).then(() => {
+    console.log("SalesforceInteractions initialized");
+}).catch((err) => {
+    console.error("SalesforceInteractions init failed:", err);
+});
+</script>
 
 <!-- HEADER -->
 <header class="site-header">
@@ -540,13 +599,21 @@ SalesforceInteractions.init({
                 <input type="search" placeholder="Search products" aria-label="Search products">
             </div>
 
-            <a href="login.html" class="header-account">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                Login
-            </a>
+            <!-- ACCOUNT AREA: swapped between logged-out/logged-in state by checkSession() below -->
+            <div class="header-account-menu" id="accountMenu">
+                <a href="login.html" class="header-account" id="accountTrigger">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span id="accountLabel">Login</span>
+                </a>
+
+                <div class="header-account-dropdown" id="accountDropdown">
+                    <span class="account-email" id="accountEmail"></span>
+                    <button type="button" id="logoutBtn">Log out</button>
+                </div>
+            </div>
 
             <a href="#" class="header-icon wishlist-header" aria-label="Wishlist">
                 ♡
@@ -885,6 +952,14 @@ SalesforceInteractions.init({
 <script>
 
     /*
+     * API CONFIG
+     * Update this if the backend runs somewhere other than localhost:3000.
+     */
+
+    const API_BASE = "http://localhost:3000";
+
+
+    /*
      * PRODUCT DATABASE
      */
 
@@ -1068,7 +1143,7 @@ SalesforceInteractions.init({
             button.classList.add("active");
             button.textContent = "♥";
 
-    
+
 
         } else {
 
@@ -1121,11 +1196,98 @@ SalesforceInteractions.init({
 
 
     /*
+     * SESSION / ACCOUNT STATE
+     * Checks the backend for a logged-in session (via the httpOnly cookie)
+     * and swaps the header between "Login" and an account dropdown.
+     */
+
+    const accountTrigger = document.getElementById("accountTrigger");
+    const accountLabel = document.getElementById("accountLabel");
+    const accountDropdown = document.getElementById("accountDropdown");
+    const accountEmail = document.getElementById("accountEmail");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    function firstNameOf(fullName) {
+        if (!fullName) return "Account";
+        return fullName.trim().split(" ")[0];
+    }
+
+    function renderLoggedIn(user) {
+        accountLabel.textContent = firstNameOf(user.fullName);
+        accountEmail.textContent = user.email;
+
+        // Swap the trigger from a plain link to a dropdown toggle
+        accountTrigger.setAttribute("href", "#");
+        accountTrigger.setAttribute("aria-haspopup", "true");
+        accountTrigger.setAttribute("aria-expanded", "false");
+
+        accountTrigger.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = accountDropdown.classList.contains("open");
+            if (isOpen) {
+                accountDropdown.classList.remove("open");
+                accountTrigger.setAttribute("aria-expanded", "false");
+            } else {
+                accountDropdown.classList.add("open");
+                accountTrigger.setAttribute("aria-expanded", "true");
+            }
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!accountDropdown.contains(e.target) && e.target !== accountTrigger) {
+                accountDropdown.classList.remove("open");
+                accountTrigger.setAttribute("aria-expanded", "false");
+            }
+        });
+    }
+
+    function renderLoggedOut() {
+        accountLabel.textContent = "Login";
+        accountTrigger.setAttribute("href", "login.html");
+    }
+
+    async function checkSession() {
+        try {
+            const response = await fetch(`${API_BASE}/api/auth/me`, {
+                credentials: "include",
+            });
+
+            if (response.ok) {
+                const user = await response.json();
+                renderLoggedIn(user);
+            } else {
+                renderLoggedOut();
+            }
+        } catch (err) {
+            // Backend unreachable — fail quietly into the logged-out state
+            // rather than blocking the page.
+            console.error("Session check failed:", err);
+            renderLoggedOut();
+        }
+    }
+
+    logoutBtn.addEventListener("click", async function () {
+        try {
+            await fetch(`${API_BASE}/api/auth/logout`, {
+                method: "POST",
+                credentials: "include",
+            });
+        } catch (err) {
+            console.error("Logout request failed:", err);
+        } finally {
+            window.location.href = "index.html";
+        }
+    });
+
+
+    /*
      * INITIALIZE
      */
 
     updateCartCount();
     restoreWishlist();
+    checkSession();
 
 
     /*

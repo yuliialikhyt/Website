@@ -288,7 +288,7 @@
         </form>
 
         <p class="login-footer">
-            Don't have an account? <a href="create_account.html" id="createAccountLink">Create one</a>
+            Don't have an account? <a href="create-account.html" id="createAccountLink">Create one</a>
         </p>
     </div>
 </main>
@@ -316,29 +316,28 @@
 
 
     /*
-     * MOCK USER STORE
-     * No backend here — this validates the form and persists a session
-     * to localStorage so the rest of the demo site can read login state.
-     * Swap validateCredentials() for a real API call when one exists.
+     * API CONFIG
+     * Update this if the backend runs somewhere other than localhost:3000.
      */
 
-    function getRegisteredUsers() {
-        return JSON.parse(localStorage.getItem("users") || "[]");
-    }
+    const API_BASE = "http://localhost:3000";
 
-    function validateCredentials(email, password) {
-        const users = getRegisteredUsers();
-        const match = users.find(
-            u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
-        );
-        return !!match;
-    }
+    async function loginRequest(email, password) {
+        const response = await fetch(`${API_BASE}/api/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include", // sends/receives the httpOnly session cookie
+            body: JSON.stringify({ email, password }),
+        });
 
-    function startSession(email) {
-        localStorage.setItem("session", JSON.stringify({
-            email: email,
-            loggedInAt: new Date().toISOString()
-        }));
+        let data = {};
+        try {
+            data = await response.json();
+        } catch {
+            // No JSON body (e.g. network error) — fall through with empty data.
+        }
+
+        return { ok: response.ok, data };
     }
 
 
@@ -392,7 +391,7 @@
      * FORM SUBMISSION
      */
 
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
         e.preventDefault();
 
         formError.classList.remove("show");
@@ -407,23 +406,32 @@
         submitBtn.disabled = true;
         submitBtn.textContent = "Logging in...";
 
-        // Simulated latency so the disabled/loading state is visible in testing.
-        setTimeout(() => {
+        try {
 
-            if (validateCredentials(email, password)) {
+            const { ok, data } = await loginRequest(email, password);
 
-                startSession(email);
+            if (ok) {
+
                 window.location.href = "index.html";
 
             } else {
 
+                formError.textContent = data.error || "That email and password combination didn't work. Try again.";
                 formError.classList.add("show");
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Log In";
 
             }
 
-        }, 400);
+        } catch (err) {
+
+            console.error("Login request failed:", err);
+            formError.textContent = "Couldn't reach the server. Please try again.";
+            formError.classList.add("show");
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Log In";
+
+        }
 
     });
 
