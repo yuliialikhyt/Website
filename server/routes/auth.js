@@ -83,9 +83,9 @@ router.post("/signup", async (req, res) => {
  */
 router.post("/login", async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password_decrypted } = req.body;
 
-        if (!email || !password) {
+        if (!email || !password_decrypted) {
             return res.status(400).json({ error: "Email and password are required." });
         }
 
@@ -103,7 +103,7 @@ router.post("/login", async (req, res) => {
         }
 
         const user = result.rows[0];
-        const matches = await bcrypt.compare(password, user.password_hash);
+        const matches = await bcrypt.compare(password_decrypted, user.password);
 
         if (!matches) {
             return genericError();
@@ -113,8 +113,8 @@ router.post("/login", async (req, res) => {
 
         return res.json({
             id: user.id,
-            fullName: user.full_name,
-            email: user.email,
+            fullName: user.first_name,
+            email: user.email_address,
         });
 
     } catch (err) {
