@@ -322,12 +322,12 @@
 
     const API_BASE = "https://website-kdom.onrender.com";
 
-    async function loginRequest(email, password) {
+    async function loginRequest(email, password_decrypted) {
         const response = await fetch(`${API_BASE}/api/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include", // sends/receives the httpOnly session cookie
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password_decrypted }),
         });
 
         let data = {};
@@ -401,14 +401,14 @@
         }
 
         const email = emailInput.value.trim();
-        const password = passwordInput.value;
+        const password_decrypted = passwordInput.value;
 
         submitBtn.disabled = true;
         submitBtn.textContent = "Logging in...";
 
         try {
 
-            const { ok, data } = await loginRequest(email, password);
+            const { ok, data } = await loginRequest(email, password_decrypted);
 
             if (ok) {
 
