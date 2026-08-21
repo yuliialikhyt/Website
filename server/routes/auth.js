@@ -44,7 +44,7 @@ router.post("/signup", async (req, res) => {
         }
 
         const existing = await pool.query(
-            "SELECT id FROM users WHERE LOWER(email) = LOWER($1)",
+            "SELECT id FROM users WHERE LOWER(email_address) = LOWER($1)",
             [email]
         );
         if (existing.rows.length > 0) {
@@ -56,9 +56,9 @@ router.post("/signup", async (req, res) => {
         const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
         const result = await pool.query(
-            `INSERT INTO users (full_name, email, password_hash)
+            `INSERT INTO users (first_name, email_address, password)
              VALUES ($1, $2, $3)
-             RETURNING id, full_name, email, created_at`,
+             RETURNING id, first_name, email_address, created_at`,
             [fullName.trim(), email.trim(), passwordHash]
         );
 
@@ -90,7 +90,7 @@ router.post("/login", async (req, res) => {
         }
 
         const result = await pool.query(
-            "SELECT id, full_name, email, password_hash FROM users WHERE LOWER(email) = LOWER($1)",
+            "SELECT id, first_name, email_address, password FROM users WHERE LOWER(email_address) = LOWER($1)",
             [email]
         );
 
@@ -150,7 +150,7 @@ router.get("/me", async (req, res) => {
         }
 
         const result = await pool.query(
-            "SELECT id, full_name, email FROM users WHERE id = $1",
+            "SELECT id, first_name, email_address FROM users WHERE id = $1",
             [payload.sub]
         );
 
