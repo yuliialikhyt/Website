@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Allow the front-end origin to send/receive cookies.
-// Update FRONTEND_ORIGIN in .env to match where login.html/create-account.html are served from.
+// Update FRONTEND_ORIGIN in .env to match where login.html/create_account.html are served from.
 app.use(cors({
     origin: process.env.FRONTEND_ORIGIN || "http://localhost:5500",
     credentials: true,
