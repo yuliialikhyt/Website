@@ -401,7 +401,7 @@
      * Update this if the backend runs somewhere other than localhost:3000.
      */
 
-    const API_BASE = "http://localhost:5050";
+    const API_BASE = "https://website-kdom.onrender.com";
 
     async function signupRequest(fullName, email, password) {
         const response = await fetch(`${API_BASE}/api/auth/signup`, {
