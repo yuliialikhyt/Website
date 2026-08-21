@@ -84,8 +84,6 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const { email, password_decrypted } = req.body;
-        console.log(email);
-        console.log(password_decrypted);
         if (!email || !password_decrypted) {
             return res.status(400).json({ error: "Email and password are required." });
         }
